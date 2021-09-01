@@ -30,9 +30,9 @@ tput civis
       fi
       #INSTALL POLYBAR
       if [[ -d "/home/$userName/Descargas/polybar" ]];then
-  echo -e "${cyanColour}[*]${endColour}${grayColour}Making the polybar ... !${endColour}"
+              echo -e "${cyanColour}[*]${endColour}${grayColour}Making the polybar ... !${endColour}"
               make_polybar
-  configure_polybar
+              configure_polybar
       fi
 
       tput cnorm

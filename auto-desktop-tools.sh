@@ -28,6 +28,7 @@ source ./bspwm/install_bspwm.sh
 source ./colours/colours.sh
 source ./configurations/cursor.sh
 source ./configurations/feh_bspwmrc.sh
+source ./configurations/firefox_firejail.sh
 source ./firefox-firejail/install_firefox_firejail.sh
 source ./dependencies/dependencies_ub_deb_parr.sh
 source ./end/end.sh
