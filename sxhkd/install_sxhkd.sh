@@ -13,7 +13,7 @@ userName="$(logname)"
       echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/sxhkd" ]];then
               if [[ -d "/home/$userName" ]];then
-                      /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/Descargas/sxhkd > /dev/null 2>&1
+                      /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/Descargas/sxhkd > /dev/null 2>/dev/null
               fi
 
               if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
@@ -34,12 +34,12 @@ if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
 fi
 #INSTALL SXHKD
 if [[ -d "/home/$userName/sxhkd" ]];then
-              make_sxhkd
+  make_sxhkd
   cp_sxhkd_example_files
   sxhkdrc_configuration
-      fi
+fi
 
-      tput cnorm
+tput cnorm
 }
 ################################################################################
 ################################################################################
@@ -68,7 +68,7 @@ userName="$(logname)"
 function make_sxhkd(){
 userName="$(logname)"
       (cd /home/$userName/sxhkd ; /usr/bin/make > /dev/null ; /usr/bin/make install > /dev/null ; apt-get install sxhkd -y > /dev/null)
-echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de SXHKD finalizada !${endColour}"
+      echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de SXHKD finalizada !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -98,10 +98,10 @@ userName="$(logname)"
 ################################################################################
 ################################################################################
 function sxhkdrc_configuration(){
-userName="$(logname)"
-echo -e "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD !${endColour}"
-sed -i 's/urxvt/gnome-terminal/' /home/$userName/.config/sxhkd/sxhkdrc
-echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
+  userName="$(logname)"
+  echo -e "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD !${endColour}"
+  sed -i 's/urxvt/gnome-terminal/' /home/$userName/.config/sxhkd/sxhkdrc
+  echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -111,8 +111,8 @@ echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 ################################################################################
 ################################################################################
 function uninstall_sxhkd(){
-userName="$(logname)"
-echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}...${endColour}"
+  userName="$(logname)"
+  echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}...${endColour}"
       #DELETE SXHKD FILES
       if [[ -d "/home/$userName/sxhkd" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}... !${endColour}"

@@ -58,9 +58,9 @@ fi
 }
 #INSTALL BSPWM WITH MAKE
 function make_bspwm(){
-userName="$(logname)"
-(cd /home/$userName/bspwm ; /usr/bin/make > /dev/null ; /usr/bin/make install > /dev/null ; apt-get install bspwm -y > /dev/null )
-      echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de BSPWM finalizada !${endColour}"
+  userName="$(logname)"
+  (cd /home/$userName/bspwm ; /usr/bin/make > /dev/null ; /usr/bin/make install > /dev/null ; apt-get install bspwm -y > /dev/null )
+  echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de BSPWM finalizada !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -71,19 +71,19 @@ userName="$(logname)"
 ################################################################################
 function cp_bspwm_example_files(){
 #CREATE BSPWM DIRECTORY
-userName="$(logname)"
-echo -e "\t${greenColour}[*]${endColour} ${grayColour}Creando directorio: ${endColour}${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
-if [[ ! -d "/home/$userName/.config/bspwm" ]];then
-  mkdir /home/$userName/.config/bspwm
-fi
-sleep .25
-cp /home/$userName/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
-echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo: ${endColour}${cyanColour}bspwmrc${endColour} ${grayColour}...${endColour}"
-sleep .25
-chmod +x /home/$userName/.config/bspwm/bspwmrc
-echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo permiso de ejecución: ${endColour}${cyanColour}chmod +x ~/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
-sleep .25
-echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
+  userName="$(logname)"
+  echo -e "\t${greenColour}[*]${endColour} ${grayColour}Creando directorio: ${endColour}${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
+  if [[ ! -d "/home/$userName/.config/bspwm" ]];then
+    mkdir /home/$userName/.config/bspwm
+  fi
+  sleep .25
+  cp /home/$userName/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
+  echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo: ${endColour}${cyanColour}bspwmrc${endColour} ${grayColour}...${endColour}"
+  sleep .25
+  chmod +x /home/$userName/.config/bspwm/bspwmrc
+  echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo permiso de ejecución: ${endColour}${cyanColour}chmod +x ~/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
+  sleep .25
+  echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -98,10 +98,10 @@ echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${en
       #DELETE BSPWM FILES
       if [[ -d "/home/$userName/bspwm" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}bspwm${endColour} ${grayColour}... !${endColour}"
-              apt-get remove --auto-remove bspwm -y > /dev/null
-  apt-get purge bspwm -y > /dev/null
-  apt-get purge --auto-remove bspwm -y > /dev/null
-  rm -r /home/$userName/bspwm > /dev/null
+              apt-get remove --auto-remove bspwm -y > /dev/null 2>/dev/null
+              apt-get purge bspwm -y > /dev/null 2>/dev/null
+              apt-get purge --auto-remove bspwm -y > /dev/null 2>/dev/null
+              rm -r /home/$userName/bspwm > /dev/null 2>/dev/null
               if [[ -d "/home/$userName/.config/bspwm" ]];then
                       echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}bspwm${endColour} ${grayColour}configuration files ...${endColour}"
                       rm -r /home/$userName/.config/bspwm
@@ -123,82 +123,82 @@ echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${en
 ################################################################################
 ################################################################################
 function bspwm_installation_arch(){
-tput civis
-userName="$(logname)"
-echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
-dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm)
-#mkdir ~/.config
-#mkdir ~/.config/bspwm
-#mkdir ~/.config/sxhkd
-# install -Dm755 /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm/bspwmrc
-# install -Dm644 /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd/sxhkdrc
-#Arracnar lightdm systemctl enable lightdm
-for program in "${dependencies[@]}";do
-  pacman -Qs $program > /dev/null 2>&1
-  instaladoP="$(echo $?)"
-  test -f /usr/bin/$program > /dev/null 2>&1
-  instaladoT="$(echo $?)"
-  which $program > /dev/null 2>&1
-  instaladoW="$(echo $?)"
-  if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
-    if [[ $program == "xorg" ]];then
-      yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    else
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    fi
-    sleep .25
-  else
-    if [[ $program == "xorg" ]];then
-      yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    elif [[ $program == "bspwm" || $program == "sxhkd" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    elif [[ $program == "lightdm" || $program == "lightdm-gtk-greeter" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    elif [[ $program == "lightdm-gtk-greeter-settings" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    else
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
-    fi
-    sleep .25
-    tput cnorm
-  fi
-done
-for program in "${dependencies[@]}";do
-  if [[ $program == "rxvt-unicode" ]];then
-    pacman -Qs urxvt > /dev/null 2>&1
-    instaladoP="$(echo $?)"
-    test -f /usr/bin/urxvt > /dev/null 2>&1
-    instaladoT="$(echo $?)"
-    which urxvt > /dev/null 2>&1
-    instaladoW="$(echo $?)"
-  else
+  tput civis
+  userName="$(logname)"
+  echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
+  dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm)
+  #mkdir ~/.config
+  #mkdir ~/.config/bspwm
+  #mkdir ~/.config/sxhkd
+  # install -Dm755 /usr/share/doc/bspwm/examples/bspwmrc ~/.config/bspwm/bspwmrc
+  # install -Dm644 /usr/share/doc/bspwm/examples/sxhkdrc ~/.config/sxhkd/sxhkdrc
+  #Arracnar lightdm systemctl enable lightdm
+  for program in "${dependencies[@]}";do
     pacman -Qs $program > /dev/null 2>&1
     instaladoP="$(echo $?)"
     test -f /usr/bin/$program > /dev/null 2>&1
     instaladoT="$(echo $?)"
     which $program > /dev/null 2>&1
     instaladoW="$(echo $?)"
-  fi
-  if [[ $instaladoP != "0" && $instaladoT != "0" && $instaladoW != "0" ]];then
-    echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}$program${endColour} ${redColour}(not installed)${endColour}"
-    sleep .25
-    tput cnorm
-    exit 0
-  fi
-done
+    if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
+      if [[ $program == "xorg" ]];then
+        yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      else
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      fi
+      sleep .25
+    else
+      if [[ $program == "xorg" ]];then
+        yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      elif [[ $program == "bspwm" || $program == "sxhkd" ]];then
+        yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      elif [[ $program == "lightdm" || $program == "lightdm-gtk-greeter" ]];then
+        yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      elif [[ $program == "lightdm-gtk-greeter-settings" ]];then
+        yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      else
+        yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      fi
+      sleep .25
+      tput cnorm
+    fi
+  done
+  for program in "${dependencies[@]}";do
+    if [[ $program == "rxvt-unicode" ]];then
+      pacman -Qs urxvt > /dev/null 2>&1
+      instaladoP="$(echo $?)"
+      test -f /usr/bin/urxvt > /dev/null 2>&1
+      instaladoT="$(echo $?)"
+      which urxvt > /dev/null 2>&1
+      instaladoW="$(echo $?)"
+    else
+      pacman -Qs $program > /dev/null 2>&1
+      instaladoP="$(echo $?)"
+      test -f /usr/bin/$program > /dev/null 2>&1
+      instaladoT="$(echo $?)"
+      which $program > /dev/null 2>&1
+      instaladoW="$(echo $?)"
+    fi
+    if [[ $instaladoP != "0" && $instaladoT != "0" && $instaladoW != "0" ]];then
+      echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}$program${endColour} ${redColour}(not installed)${endColour}"
+      sleep .25
+      tput cnorm
+      exit 0
+    fi
+  done
 
-mkdir_bspwm
-install_bspwmrc_sxhkdrc
-chmod_bspwmrc
-lightdm_enable
+  mkdir_bspwm
+  install_bspwmrc_sxhkdrc
+  chmod_bspwmrc
+  lightdm_enable
 
-tput cnorm
+  tput cnorm
 }
 
 function mkdir_bspwm(){

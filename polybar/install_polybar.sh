@@ -75,7 +75,7 @@ if [[ ! -d "/home/$userName/.config/polybar" ]];then
     (cd /home/$userName/Descargas/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
     echo -e "${greenColour}(OK)${endColour}"
     echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
-    echo "~/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
+    echo "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
     echo -e "${greenColour}(OK)${endColour}"
     echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
     (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
