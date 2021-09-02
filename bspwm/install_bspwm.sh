@@ -83,6 +83,7 @@ sleep .25
 chmod +x /home/$userName/.config/bspwm/bspwmrc
 echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo permiso de ejecución: ${endColour}${cyanColour}chmod +x ~/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
 sleep .25
+echo -e "\nbspc config focus_follows_pointer true" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
 echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 }
 ################################################################################

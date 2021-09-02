@@ -101,6 +101,20 @@ function sxhkdrc_configuration(){
   userName="$(logname)"
   echo -e "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD !${endColour}"
   sed -i 's/urxvt/gnome-terminal/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/h,j,k,l/Left,Down,Up,Right/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + ctrl + {Left,Down,Up,Right}/super + ctrl + alt + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + ctrl + space/super + ctrl + alt + space/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + alt + {Left,Down,Up,Right}/#super + alt + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}/#bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + alt + shift + {Left,Down,Up,Right}/#super + alt + shift + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}/#bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + {Left,Down,Up,Right}/super + ctrl + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  echo -e "\n#CUSTOM" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  echo -e "\nalt + super + {Left,Down,Up,Right}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  echo -e "\t/home/$userName/bspwm/scripts/bspwm_resize {west,south,north,east}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  mkdir /home/$userName/bspwm/scripts
+  cp ./scripts/bspwm_resize /home/$userName/bspwm/scripts/
+  chmod +x /home/$userName/bspwm/scripts/bspwm_resize
   echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 }
 ################################################################################
