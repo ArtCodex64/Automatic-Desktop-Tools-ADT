@@ -67,7 +67,7 @@ userName="$(logname)"
 ################################################################################
 function make_sxhkd(){
 userName="$(logname)"
-      (cd /home/$userName/sxhkd ; /usr/bin/make > /dev/null ; /usr/bin/make install > /dev/null ; apt-get install sxhkd -y > /dev/null)
+      (cd /home/$userName/sxhkd ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install sxhkd -y > /dev/null 2>/dev/null)
       echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de SXHKD finalizada !${endColour}"
 }
 ################################################################################

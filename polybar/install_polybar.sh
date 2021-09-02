@@ -11,12 +11,12 @@ function polybar_installation(){
 tput civis
       userName="$(logname)"
       echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}polybar${endColour} ${grayColour}...${endColour}"
-      if [[ ! -d "/home/$userName/Descargas/polybar" ]];then
+      if [[ ! -d "/home/$userName/polybar" ]];then
               if [[ -d "/home/$userName" ]];then
-                      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/Descargas/polybar > /dev/null 2>&1
+                      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/polybar > /dev/null 2>&1
               fi
 
-              if [[ -d "/home/$userName/Descargas/polybar" ]];then
+              if [[ -d "/home/$userName/polybar" ]];then
                       echo -e "\t${greenColour}[*] ${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}polybar${endColour} ${greenColour}(installed)${endColour}"
                       sleep .25
               else
@@ -29,7 +29,7 @@ tput civis
               echo -e "\t${greenColour}[*]${endColour} ${grayColour}POLYBAR files${endColour} ${greenColour}(ok)${endColour}"
       fi
       #INSTALL POLYBAR
-      if [[ -d "/home/$userName/Descargas/polybar" ]];then
+      if [[ -d "/home/$userName/polybar" ]];then
               echo -e "${cyanColour}[*]${endColour}${grayColour}Making the polybar ... !${endColour}"
               make_polybar
               configure_polybar
@@ -49,10 +49,10 @@ function make_polybar(){
       userName="$(logname)"
 #CREAR DIRECTORIO POLYBAR/BUILD
 if [[ ! -d "/home/$userName/polybar/build" ]];then
-  mkdir /home/$userName/Descargas/polybar/build > /dev/null 2>&1
+  mkdir /home/$userName/polybar/build > /dev/null 2>&1
 fi;
 #EJECUTAMOS COMANDO
-      (cd /home/$userName/Descargas/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
+      (cd /home/$userName/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
       echo -e "\t${greenColour}[*] ${endColour}${grayColour}Instalación de POLYBAR finalizada !${endColour}"
 }
 ################################################################################
@@ -67,20 +67,20 @@ userName="$(logname)"
 if [[ ! -d "/home/$userName/.config/polybar" ]];then
   echo -e "${cyanColour}[*]${endColour} ${grayColour}Configurado POLYBAR ...${endColour}"
   mkdir /home/$userName/.config/polybar > /dev/null 2>&1
-  if [[ -d "/home/$userName/.config/polybar" ]];then
-    echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}/home/$userName/.config/polybar${endColour} ${grayColour}creado !${endColour}"
-    echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Clonando repositorio de git:${endColour} ${cyanColour}Blue-sky${endColour} ${grayColour}...${endColour}"
-    /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/Descargas/blue-sky > /dev/null 2>&1
-    echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos de${endColour} ${cyanColour}blue-sky${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/Descargas/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
-    echo -e "${greenColour}(OK)${endColour}"
-    echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
-    echo "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
-    echo -e "${greenColour}(OK)${endColour}"
-    echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
-    echo -e "${greenColour}(OK)${endColour}"
-  fi
+fi
+if [[ -d "/home/$userName/.config/polybar" ]];then
+  echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}/home/$userName/.config/polybar${endColour} ${grayColour}creado !${endColour}"
+  echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Clonando repositorio de git:${endColour} ${cyanColour}Blue-sky${endColour} ${grayColour}...${endColour}"
+  /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/Descargas/blue-sky > /dev/null 2>&1
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos de${endColour} ${cyanColour}blue-sky${endColour} ${grayColour}...${endColour}"
+  (cd /home/$userName/Descargas/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
+  echo -e "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
+  (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
+  echo -e "${greenColour}(OK)${endColour}"
 fi
 }
 ################################################################################
@@ -93,10 +93,10 @@ fi
 function uninstall_polybar(){
 userName="$(logname)"
 echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}POLYBAR${endColour} ${grayColour}...${endColour}"
-      if [[ -d "/home/$userName/Descargas/polybar" ]];then
+      if [[ -d "/home/$userName/polybar" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}polybar${endColour} ${grayColour}... !${endColour}"
-              rm -r /home/$userName/Descargas/polybar
-  rm -r /home/$userName/.config/polybar
+              rm -r /home/$userName/polybar
+              rm -r /home/$userName/.config/polybar
               if [[ ! -d "/home/$userName/polybar" && ! -d "/home/$userName/.config/polybar" ]];then
                       echo -e "\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
               else
@@ -130,7 +130,7 @@ function polybar_installation_arch(){
     which $program > /dev/null 2>&1
     instaladoW="$(echo $?)"
     if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
-        echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
+      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
       sleep .25
     else
       yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
