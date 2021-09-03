@@ -8,14 +8,7 @@
 # If I finish the script in the future I will share it
 
 
-	#Ctrl_c
-trap ctrl_c INT
 
-function ctrl_c(){
-	echo "${redColour}[*]${endColour}\n\n\t${grayColour}Exiting ...${endColour}"
-	tput cnorm
-	exit 0
-}
 ################################################################################
 ################################################################################
 ################################################################################
@@ -27,6 +20,7 @@ source ./banner/banner.sh
 source ./bspwm/install_bspwm.sh
 source ./colours/colours.sh
 source ./configurations/cursor.sh
+source ./ctrl-c/ctrl_c.sh
 source ./configurations/feh_bspwmrc.sh
 source ./configurations/firefox_firejail.sh
 source ./firefox-firejail/install_firefox_firejail.sh
@@ -41,6 +35,7 @@ source ./os-detect/os_detect.sh
 source ./picom/install_picom.sh
 source ./polybar/install_polybar.sh
 source ./powerlevel10k/install_powerlevel10k.sh
+source ./rofi/install_rofi.sh
 source ./sxhkd/install_sxhkd.sh
 source ./zsh/install_zsh.sh
 
@@ -61,6 +56,8 @@ function installation_ub_deb_parr(){
   polybar_installation
   sleep 1
 	install_picom
+	sleep 1
+	install_rofi
 	sleep 1
   feh_installation
   sleep 1

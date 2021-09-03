@@ -32,6 +32,7 @@ tput civis
       if [[ -d "/home/$userName/polybar" ]];then
               echo -e "${cyanColour}[*]${endColour}${grayColour}Making the polybar ... !${endColour}"
               make_polybar
+              install_net_tools
               configure_polybar
       fi
 
@@ -48,12 +49,22 @@ tput civis
 function make_polybar(){
       userName="$(logname)"
 #CREAR DIRECTORIO POLYBAR/BUILD
-if [[ ! -d "/home/$userName/polybar/build" ]];then
-  mkdir /home/$userName/polybar/build > /dev/null 2>&1
-fi;
+  if [[ ! -d "/home/$userName/polybar/build" ]];then
+    mkdir /home/$userName/polybar/build > /dev/null 2>&1
+  fi;
 #EJECUTAMOS COMANDO
-      (cd /home/$userName/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
-      echo -e "\t${greenColour}[*] ${endColour}${grayColour}Instalación de POLYBAR finalizada !${endColour}"
+  (cd /home/$userName/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
+  echo -e "\t${greenColour}[*] ${endColour}${grayColour}Instalación de POLYBAR finalizada !${endColour}"
+}
+################################################################################
+################################################################################
+################################################################################
+#INSTALLING NET-TOOLS
+################################################################################
+################################################################################
+################################################################################
+function install_net_tools(){
+  apt install net-tools -y > /dev/null 2>&1
 }
 ################################################################################
 ################################################################################
@@ -73,13 +84,58 @@ if [[ -d "/home/$userName/.config/polybar" ]];then
   echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Clonando repositorio de git:${endColour} ${cyanColour}Blue-sky${endColour} ${grayColour}...${endColour}"
   /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/Descargas/blue-sky > /dev/null 2>&1
   echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos de${endColour} ${cyanColour}blue-sky${endColour} ${grayColour}...${endColour}"
-  (cd /home/$userName/Descargas/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
+  cp -r /home/$userName/Descargas/blue-sky/polybar/* /home/$userName/.config/polybar/ > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour}${grayColour}Borrando archivo${endColour} ${cyanColour}current.ini${endColour} ${grayColour}...${endColour}"
+  rm /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour}${grayColour}Copiando archivo${endColour} ${cyanColour}current.ini${endColour} ${grayColour}...${endColour}"
+  cp ./configurations/current-polybar.ini /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+  chown $userName:$userName /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour}${grayColour}Borrando archivo${endColour} ${cyanColour}launch.sh${endColour} ${grayColour}...${endColour}"
+  rm /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour}${grayColour}Copiando archivo${endColour} ${cyanColour}launch.sh${endColour} ${grayColour}...${endColour}"
+  cp ./configurations/launch-polybar.sh /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+  chown $userName:$userName /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+  chmod +x /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
   echo -e "${greenColour}(OK)${endColour}"
   echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
   echo -e "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
   echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Creando directorio ${endColour} ${cyanColour}/home/$userName/.config/bin${endColour} ${grayColour}...${endColour}"
+  mkdir /home/$userName/.config/bin > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo ${endColour} ${cyanColour}ethernet_status.sh${endColour} ${grayColour}...${endColour}"
+  cp ./configurations/ethernet_status.sh /home/$userName/.config/bin/ > /dev/null 2>&1
+  chmod +x /home/$userName/.config/bin/ethernet_status.sh > /dev/null 2>&1
+  chown $userName:$userName /home/$userName/.config/bin/ethernet_status.sh > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
+  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo ${endColour} ${cyanColour}ethernet_status.sh${endColour} ${grayColour}...${endColour}"
+  cp ./configurations/ethernet_status_tun.sh /home/$userName/.config/bin/ > /dev/null 2>&1
+  chmod +x /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+  chown $userName:$userName /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
   echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
   (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
+  if [[ $operating_system == "ubuntu" ]];then
+    before="content = %{T7}"
+    after=${before%?}
+    sed -i "s/$before/$after/" /home/$(logname)/.config/polybar/current.ini
+  elif [[ $operating_system == "debian" ]];then
+    before="content = %{T7}"
+    after=${before%?}
+    sed -i "s/$before/$after/" /home/$(logname)/.config/polybar/current.ini
+  elif [[ $operating_system == "parrot" ]];then
+    before="content = %{T7}"
+    after=${before%?}
+    sed -i "s/$before/$after/" /home/$(logname)/.config/polybar/current.ini
+  elif [[ $operating_system == "arch" ]];then
+    before="content = %{T7}"
+    after=${before%?}
+    sed -i "s/$before/$after/" /home/$(logname)/.config/polybar/current.ini
+  fi
   echo -e "${greenColour}(OK)${endColour}"
 fi
 }

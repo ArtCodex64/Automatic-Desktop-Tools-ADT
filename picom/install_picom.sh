@@ -79,7 +79,7 @@ function dependencies_picom(){
 ################################################################################
 function download_picom(){
   userName="$(logname)"
-  echo -en "${yellowColour}[*]${endColour} ${grayColour}Clonando repositorio picom ...${endColour}"
+  echo -en "${cyanColour}[*]${endColour} ${grayColour}Clonando repositorio picom ...${endColour}"
   git clone https://github.com/ibhagwan/picom.git /home/$userName/picom >> /dev/null 2>/dev/null
   if [[ -d /home/$userName/picom  ]];then
     (cd /home/$userName/picom ; git submodule update --init --recursive > /dev/null 2>/dev/null ; meson --buildtype=release . build > /dev/null 2>/dev/null ; ninja -C build > /dev/null 2>&1 ; sudo ninja -C build install > /dev/null 2>&1)
