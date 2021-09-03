@@ -8,22 +8,16 @@
 ################################################################################
 ################################################################################
 function hack_nerd_fonts_installation(){
-echo -e "${cyanColour}[*]${endColour} ${grayColour}Checking Hack Nerd Fonts ...${endColour}"
+echo -en "${cyanColour}[*]${endColour} ${grayColour}Checking Hack Nerd Fonts ...${endColour}"
 cat "/usr/local/share/fonts/Hack Regular Nerd Font Complete.ttf" > /dev/null 2>&1
 if [[ "$(echo $?)" != "0" ]];then
-  echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Downloading${endColour} ${cyanColour}Hack Nerd Fonts${endColour} ${grayColour}...${endColour}"
   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip -P /usr/local/share/fonts/ > /dev/null 2>&1
   if [[ -f "/usr/local/share/fonts/Hack.zip" ]];then
-    echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Installing ${cyanColour}Hack Nerd Fonts${endColour} ${grayColour}...${endColour}"
     (cd /usr/local/share/fonts/ ; unzip Hack.zip > /dev/null 2>&1)
     cat "/usr/local/share/fonts/Hack Regular Nerd Font Complete.ttf" > /dev/null 2>&1
     if [[ "$(echo $?)" == "0" ]];then
-      echo -e "\t\t\t${greenColour}[*]${endColour} ${cyanColour}Hack Nerd Fonts${endColour} ${grayColour}installed !${endColour}"
-      echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}Hack.zip${endColour} ${grayColour}file${endColour}"
+      echo -e "${greenColour}(OK)${endColour}"
       (cd /usr/local/share/fonts/ ; rm Hack.zip > /dev/null 2>&1)
-      if [[ ! -f "/usr/local/share/fonts/Hack.zip" ]];then
-        echo -e "\t\t\t${greenColour}[*]${endColour} ${cyanColour}Hack.zip${endColour} ${grayColour}deleted !${endColour}"
-      fi
     fi
   fi
 else

@@ -10,23 +10,13 @@
 function sxhkd_installation(){
       tput civis
 userName="$(logname)"
-      echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
+      echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/sxhkd" ]];then
               if [[ -d "/home/$userName" ]];then
                       /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/Descargas/sxhkd > /dev/null 2>/dev/null
               fi
-
-              if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
-                      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}sxhkd${endColour} ${greenColour}(installed)${endColour}"
-                      sleep .25
-              else
-                      echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}sxhkd${endColour} ${redColour}(not installed)${endColour}"
-                      sleep .25
-                      tput cnorm
-                      exit 0
-              fi
       else
-              echo -e "\t${greenColour}[*]${endColour} ${grayColour}SXHKD installed !${endColour}"
+              echo -e "${grayColour}(OK)${endColour}"
       fi
 #Move the sxhkd files
 if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
@@ -49,13 +39,9 @@ tput cnorm
 ################################################################################
 ################################################################################
 function move_sxhkd_files(){
-userName="$(logname)"
-      echo -e "${cyanColour}[*]${endColour} ${grayColour}Moviendo archivos${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}al path${endColour} ${cyanColour}~/root/${endColour} ${grayColour}...${endColour}"
-      sleep .25
+  userName="$(logname)"
       if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
               mv /home/$userName/Descargas/sxhkd /home/$userName/
-              echo -e "${cyanColour}[*]${endColour} ${grayColour}Archivos movidos${endColour} ${cyanColour}~/Downloads/sxhkd${endColour} ${grayColour}...${endColour} ${greenColour}(ok)${endColour}"
-              sleep .25
       fi
 }
 ################################################################################
@@ -68,7 +54,6 @@ userName="$(logname)"
 function make_sxhkd(){
 userName="$(logname)"
       (cd /home/$userName/sxhkd ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install sxhkd -y > /dev/null 2>/dev/null)
-      echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de SXHKD finalizada !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -80,15 +65,11 @@ userName="$(logname)"
 function cp_sxhkd_example_files(){
 userName="$(logname)"
       #CREATE SXHKD DIRECTORY
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Creando directorio: ${endColour}${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/.config/sxhkd" ]];then
               mkdir /home/$userName/.config/sxhkd
       fi
       sleep .25
       cp /home/$userName/bspwm/examples/sxhkdrc /home/$userName/.config/sxhkd/
-      echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo: ${endColour}${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
-      sleep .25
-      echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -99,7 +80,6 @@ userName="$(logname)"
 ################################################################################
 function sxhkdrc_configuration(){
   userName="$(logname)"
-  echo -e "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD !${endColour}"
   sed -i 's/urxvt/gnome-terminal/' /home/$userName/.config/sxhkd/sxhkdrc
   sed -i 's/h,j,k,l/Left,Down,Up,Right/' /home/$userName/.config/sxhkd/sxhkdrc
   sed -i 's/super + ctrl + {Left,Down,Up,Right}/super + ctrl + alt + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
@@ -115,7 +95,8 @@ function sxhkdrc_configuration(){
   mkdir /home/$userName/bspwm/scripts
   cp ./scripts/bspwm_resize /home/$userName/bspwm/scripts/
   chmod +x /home/$userName/bspwm/scripts/bspwm_resize
-  echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
+  chown $userName:$userName /home/$userName/bspwm/scripts/bspwm_resize
+  echo -e "${greenColour}(OK)${endColour}"
 }
 ################################################################################
 ################################################################################

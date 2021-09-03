@@ -17,7 +17,7 @@ tput civis
   touch /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
   echo -e "#INSTALLED PROGRAMS" >> /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
               if [[ -d "/home/$userName/.config/AUTOMATICOESC" && -d "/home/$userName/.config/AUTOMATICOESC/recovery" && -f "/home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt" ]];then
-                      echo -e "\t${greenColour}[*]${endColour} ${cyanColour}AUTOMATICOESC${endColour} ${grayColour}creado en${endColour} ${cyanColour}/home/$userName/.config/${endColour}"
+                      echo -e "\t${yellowColour}[*]${endColour} ${cyanColour}AUTOMATICOESC${endColour} ${grayColour}creado en${endColour} ${cyanColour}/home/$userName/.config/${endColour}"
               else
                       echo -e "\t${redColour}[*]${endColour} ${cyanColour}AUTOMATICOESC${endColour} ${grayColour}no creado en${endColour} ${cyanColour}/home/$userName/.config/${endColour}"
                       exit 0

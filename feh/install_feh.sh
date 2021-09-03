@@ -12,26 +12,24 @@ source ./configurations/feh_bspwmrc.sh
 
 function feh_installation(){
 tput civis
-      userName="$(logname)"
-      echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}feh${endColour} ${grayColour}...${endColour}"
-      test -f /usr/bin/feh > /dev/null 2>&1
+userName="$(logname)"
+echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}feh${endColour} ${grayColour}...${endColour}"
+test -f /usr/bin/feh > /dev/null 2>&1
 if [[ "$(echo $?)" == "0" ]];then
-  echo -e "\t${greenColour}[*]${endColour} ${grayColour}FEH${endColour} ${greenColour}(installed)${endColour}"
-      else
-  echo -e "\t${redColour}[*]${endColour} ${grayColour}FEH${endColour} ${greenColour}(not installed)${endColour}"
-              apt install feh -y > /dev/null 2>&1
+  echo -e "${greenColour}(OK)${endColour}"
+else
+  apt install feh -y > /dev/null 2>&1
   sleep .25
   test -f /usr/bin/feh > /dev/null 2>&1
   if [[ "$(echo $?)" == "0" ]];then
-    echo -e "\t\t${cyanColour}[*]${endColour} ${grayColour}FEH${endColour} ${greenColour}(installed)${endColour}"
+    echo -e "${greenColour}(OK)${endColour}"
     bg_configuration
   else
-    echo -e "\t\t${redColour}[*]${endColour} ${grayColour}FEH${endColour} ${redColour}(not installed)${endColour}"
+    echo -e "${redColour}(not installed)${endColour}"
     exit 0
   fi
-      fi
-
-      tput cnorm
+fi
+tput cnorm
 }
 ################################################################################
 ################################################################################

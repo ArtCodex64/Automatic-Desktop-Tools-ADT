@@ -53,7 +53,7 @@ function dependencies_picom(){
         done
   #INSTALLATION BIN PROGRAMS
   for programN in "${programNot[@]}";do
-                echo -en "\t\t${yellowColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programN${endColour}${grayColour} ...${endColour}"
+                echo -en "${cyanColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programN${endColour}${grayColour} ...${endColour}"
           			sleep .25
     						apt-get install $programN -y > /dev/null 2>&1
     						instalado="$(apt -qq list $programN 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
@@ -85,7 +85,7 @@ function download_picom(){
     (cd /home/$userName/picom ; git submodule update --init --recursive > /dev/null 2>/dev/null ; meson --buildtype=release . build > /dev/null 2>/dev/null ; ninja -C build > /dev/null 2>&1 ; sudo ninja -C build install > /dev/null 2>&1)
     echo -e "${greenColour}(OK)${endColour}"
   else
-    echo -e "(not installed)"
+    echo -e "${redColour}(not installed)${endColour}"
     exit 0
   fi
 }
@@ -98,42 +98,34 @@ function download_picom(){
 ################################################################################
 function config_picom(){
   userName="$(logname)"
-  echo -en "${yellowColour}[*]${endColour} ${grayColour}Copiando archivo de configuración de ${endColour}${cyanColour}picom${endColour} ${grayColour}...${endColour}"
   mkdir /home/$userName/.config/picom
   if [[ -d /home/$userName/.config/picom ]];then
     cp /home/$userName/Descargas/blue-sky/picom.conf /home/$userName/.config/picom/
-    if [[ -f /home/$userName/.config/picom/picom.conf ]];then
-      echo -e "${greenColour}(OK)${endColour}"
-    else
-      echo -e "${redColour}(no config file)${endColour}"
-      exit 0
-    fi
+    sed -i 's/backend = "glx"/#backend = "glx"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/#backend = "xrender"/backend = "xrender"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/blur-method = "dual_kawase"/#blur-method = "dual_kawase"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/blur-strength = 5/#blur-strenth = 5/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/blur-kern = "7x7box"/#blur-kern = "7x7box"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/blur-background-exclude = [/#blur-background-exclude = [/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/blur-strength = 5/#blur-strenth = 5/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    #Blur fuera
+    $resGrep="$(grep -A 10 'blur-background-exclude' /home/$userName/.config/picom/picom.conf)" > /dev/null 2>/dev/null
+    IFS=$'\n' read -d '' -r -a y <<< "$resGrep"
+    for line in "$y[@]";do
+          sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    done
+    unset y
+    unset resGrep
+    $resGrep="$(grep -A 11 'blur: {' /home/$userName/.config/picom/picom.conf)" > /dev/null 2>/dev/null
+    IFS=$'\n' read -d '' -r -a y <<< "$resGrep"
+    for line in "$y[@]";do
+          sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    done
+    echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
+    echo -e "\nbspc config border_width 0" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
   else
-    echo -e "${redColour}(no directory)${endColour}"
+    echo -e "${redColour}(no installed)${endColour}"
     exit 0
   fi
-  echo -en "${yellowColour}[*]${endColour} ${grayColour}Añadiendo modificaciones a${endColour} ${cyanColour}picom.conf${endColour} ${grayColour}y a${endColour} ${cyanColour}bspwmrc${endColour} ${grayColour}...${endColour}"
-  sed -i 's/backend = "glx"/#backend = "glx"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/#backend = "xrender"/backend = "xrender"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/blur-method = "dual_kawase"/#blur-method = "dual_kawase"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/blur-strength = 5/#blur-strenth = 5/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/blur-kern = "7x7box"/#blur-kern = "7x7box"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/blur-background-exclude = [/#blur-background-exclude = [/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  sed -i 's/blur-strength = 5/#blur-strenth = 5/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  #Blur fuera
-  $resGrep="$(grep -A 10 'blur-background-exclude' /home/$userName/.config/picom/picom.conf)" > /dev/null 2>/dev/null
-  IFS=$'\n' read -d '' -r -a y <<< "$resGrep"
-  for line in "$y[@]";do
-        sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  done
-  unset y
-  unset resGrep
-  $resGrep="$(grep -A 11 'blur: {' /home/$userName/.config/picom/picom.conf)" > /dev/null 2>/dev/null
-  IFS=$'\n' read -d '' -r -a y <<< "$resGrep"
-  for line in "$y[@]";do
-        sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-  done
-  echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
-  echo -e "\nbspc config border_width 0" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
-  echo -e "${greenColour}(OK)${endColour}"
+
 }

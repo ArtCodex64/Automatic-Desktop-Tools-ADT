@@ -44,8 +44,6 @@ function install_rofi(){
 
 function config_rofi(){
   userName="$(logname)"
-  echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Configurando key-binding para${endColour} ${cyanColour}rofi${endColour} ${grayColour}...${endColour}"
   sed -i 's/super + @space/super + d/' /home/$userName/.config/sxhkd/sxhkdrc
   sed -i 's/dmenu_run/rofi -show run/' /home/$userName/.config/sxhkd/sxhkdrc
-  echo -e "${greenColour}(OK)${endColour}"
 }

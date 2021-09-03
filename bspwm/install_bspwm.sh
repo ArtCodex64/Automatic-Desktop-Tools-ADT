@@ -10,28 +10,18 @@
 function bspwm_installation(){
 tput civis
 userName="$(logname)"
-echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
+echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
 if [[ ! -d "/home/$userName/bspwm" ]];then
   if [[ -d "/home/$userName" ]];then
     /usr/bin/git clone https://github.com/baskerville/bspwm.git /home/$userName/Descargas/bspwm > /dev/null 2>&1
   fi
-
-  if [[ -d "/home/$userName/Descargas/bspwm" ]];then
-    echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}bspwm${endColour} ${greenColour}(installed)${endColour}"
-    sleep .25
-  else
-    echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}bspwm${endColour} ${redColour}(not installed)${endColour}"
-    sleep .25
-    tput cnorm
-    exit 0
-  fi
 else
-  echo -e "\t${greenColour}[*]${endColour} ${grayColour}BSWPWM installed !${endColour}"
+  echo -e "${grayColour}(OK)${endColour}"
 fi
 #Move the sxhkd files
-      if [[ -d "/home/$userName/Descargas/bspwm" ]];then
-              move_bspwm_files
-      fi
+if [[ -d "/home/$userName/Descargas/bspwm" ]];then
+  move_bspwm_files
+fi
 #INSTALL BSPWM
 if [[ -d "/home/$userName/bspwm" ]];then
   make_bspwm
@@ -48,19 +38,16 @@ tput cnorm
 ################################################################################
 function move_bspwm_files(){
 userName="$(logname)"
-echo -e "${cyanColour}[*]${endColour} ${grayColour}Moviendo archivos${endColour} ${cyanColour}bspwm${endColour} ${grayColour}al path${endColour} ${cyanColour}~/root/${endColour} ${grayColour}...${endColour}"
 sleep .25
 if [[ -d "/home/$userName/Descargas/bspwm" ]];then
   mv /home/$userName/Descargas/bspwm /home/$userName/
-  echo -e "${cyanColour}[*]${endColour} ${grayColour}Archivos movidos${endColour} ${cyanColour}~/Downloads/bspwm${endColour} ${grayColour}...${endColour} ${greenColour}(ok)${endColour}"
   sleep .25
 fi
 }
 #INSTALL BSPWM WITH MAKE
 function make_bspwm(){
-userName="$(logname)"
-(cd /home/$userName/bspwm ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install bspwm -y > /dev/null 2>/dev/null)
-      echo -e "\t${greenColour}[*]${endColour}${grayColour}Instalación de BSPWM finalizada !${endColour}"
+  userName="$(logname)"
+  (cd /home/$userName/bspwm ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install bspwm -y > /dev/null 2>/dev/null)
 }
 ################################################################################
 ################################################################################
@@ -71,20 +58,17 @@ userName="$(logname)"
 ################################################################################
 function cp_bspwm_example_files(){
 #CREATE BSPWM DIRECTORY
-userName="$(logname)"
-echo -e "\t${greenColour}[*]${endColour} ${grayColour}Creando directorio: ${endColour}${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
-if [[ ! -d "/home/$userName/.config/bspwm" ]];then
-  mkdir /home/$userName/.config/bspwm
-fi
-sleep .25
-cp /home/$userName/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
-echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Copiando archivo: ${endColour}${cyanColour}bspwmrc${endColour} ${grayColour}...${endColour}"
-sleep .25
-chmod +x /home/$userName/.config/bspwm/bspwmrc
-echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Añadiendo permiso de ejecución: ${endColour}${cyanColour}chmod +x ~/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
-sleep .25
-echo -e "\nbspc config focus_follows_pointer true" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
-echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
+  userName="$(logname)"
+  if [[ ! -d "/home/$userName/.config/bspwm" ]];then
+    mkdir /home/$userName/.config/bspwm
+  fi
+  sleep .25
+  cp /home/$userName/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
+  sleep .25
+  chmod +x /home/$userName/.config/bspwm/bspwmrc
+  sleep .25
+  echo -e "\nbspc config focus_follows_pointer true" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
+  echo -e "${greenColour}(OK)${endColour}"
 }
 ################################################################################
 ################################################################################
