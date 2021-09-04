@@ -30,7 +30,7 @@ tput civis
       fi
       #INSTALL POLYBAR
       if [[ -d "/home/$userName/polybar" ]];then
-              echo -en "${cyanColour}[*]${endColour}${grayColour} Making the polybar ... ${endColour}"
+              echo -en "${cyanColour}[*]${endColour}${grayColour} Making the${endColour} ${cyanColour}polybar${endColour} ${grayColour}... ${endColour}"
               make_polybar
               install_net_tools
               configure_polybar

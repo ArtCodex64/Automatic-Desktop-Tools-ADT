@@ -8,7 +8,7 @@
 ################################################################################
 ################################################################################
 function hack_nerd_fonts_installation(){
-echo -en "${cyanColour}[*]${endColour} ${grayColour}Checking Hack Nerd Fonts ...${endColour}"
+echo -en "${cyanColour}[*]${endColour} ${grayColour}Checking${endColour} ${cyanColour}Hack Nerd Fonts${endColour} ${grayColour}...${endColour}"
 cat "/usr/local/share/fonts/Hack Regular Nerd Font Complete.ttf" > /dev/null 2>&1
 if [[ "$(echo $?)" != "0" ]];then
   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip -P /usr/local/share/fonts/ > /dev/null 2>&1

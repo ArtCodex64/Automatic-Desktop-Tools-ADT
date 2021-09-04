@@ -8,7 +8,7 @@
 ################################################################################
 ################################################################################
 function firefox_firejail_configuration(){
-        echo -en "${cyanColour}[*]${endColour} ${grayColour}Launch FIREFOX && FIREJAIL configuration ...${endColour}"
+        echo -en "${cyanColour}[*]${endColour} ${grayColour}Launch${endColour} ${cyanColour}FIREFOX${endColour} ${grayColour}&&${endColour} ${cyanColour}FIREJAIL${endColour} configuration ...${endColour}"
         userName="$(logname)"
         #IF NOT EXIST
 	      grep -q "#OPEN FIREFOX FIREJAIL" /home/$userName/.config/sxhkd/sxhkdrc

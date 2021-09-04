@@ -38,6 +38,7 @@ source ./picom/install_picom.sh
 source ./polybar/install_polybar.sh
 source ./powerlevel10k/install_powerlevel10k.sh
 source ./rofi/install_rofi.sh
+source ./slimlock/install_slimlock.sh
 source ./sxhkd/install_sxhkd.sh
 source ./zsh/install_zsh.sh
 
@@ -74,6 +75,8 @@ function installation_ub_deb_parr(){
 	install_bat
 	sleep 1
 	install_lsd
+	sleep 1
+	install_slim_lock
 	sleep 1
 	config_cursor
 	sleep 1

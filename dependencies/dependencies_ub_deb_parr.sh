@@ -71,7 +71,7 @@ echo -e "${cyanColour}[*]${endColour} ${grayColour}Comprobando dependencias nece
               instaladoT="$(echo $?)"
               which $programBin > /dev/null
   						instaladoW="$(echo $?)"
-              if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+              if [[ $instalado == "[instalado]" || $instaladoT == "0" || $instaladoW == "0" ]];then
     						echo -e " ${greenColour}(OK)${endColour}"
                 grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
           			if [[ "$(echo $?)" != "0" ]];then
@@ -93,7 +93,7 @@ for programNB in "${programNotBin[@]}";do
               instaladoT="$(echo $?)"
               which $programNB > /dev/null
               instaladoW="$(echo $?)"
-              if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+              if [[ $instalado == "[instalado]" || $instaladoT == "0" || $instaladoW == "0" ]];then
                       echo -e " ${greenColour}(OK)${endColour}"
               else
                       echo -e " ${redColour}(not installed)${endColour}"
@@ -107,7 +107,7 @@ done
       insDepends "${dependenciesDoc[@]}"
 tput cnorm
 #INSTALLATION POLYBAR DEPENDENCIES
-			echo -e "\n${cyanColour}[*]${endColour} ${grayColour}Comprobando dependencias necesarias para la POLYBAR ...${endColour}"
+			echo -e "${cyanColour}[*]${endColour} ${grayColour}Comprobando dependencias necesarias para la POLYBAR ...${endColour}"
       #Dormimos el programa 2 segundos
       sleep 2
 #PROGRAM POLYBAR BIN
