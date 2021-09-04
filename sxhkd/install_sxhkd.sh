@@ -9,14 +9,12 @@
 ################################################################################
 function sxhkd_installation(){
       tput civis
-userName="$(logname)"
+      userName="$(logname)"
       echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/sxhkd" ]];then
               if [[ -d "/home/$userName" ]];then
                       /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/Descargas/sxhkd > /dev/null 2>/dev/null
               fi
-      else
-              echo -e "${grayColour}(OK)${endColour}"
       fi
 #Move the sxhkd files
 if [[ -d "/home/$userName/Descargas/sxhkd" ]];then

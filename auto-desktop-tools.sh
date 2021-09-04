@@ -17,6 +17,7 @@
 ################################################################################
 ################################################################################
 source ./banner/banner.sh
+source ./bat/install_bat.sh
 source ./bspwm/install_bspwm.sh
 source ./colours/colours.sh
 source ./configurations/cursor.sh
@@ -30,6 +31,7 @@ source ./feh/install_feh.sh
 source ./firefox-firejail/install_firefox_firejail.sh
 source ./hack-nerd-fonts/install_hack_nerd_fonts.sh
 source ./help/help.sh
+source ./lsd/install_lsd.sh
 source ./mkdir-automaticoesc/mkdir_automaticoesc.sh
 source ./os-detect/os_detect.sh
 source ./picom/install_picom.sh
@@ -69,11 +71,16 @@ function installation_ub_deb_parr(){
 	sleep 1
 	install_powerlevel_10k
 	sleep 1
+	install_bat
+	sleep 1
+	install_lsd
+	sleep 1
 	config_cursor
 	sleep 1
 	end_mark
 	sleep 1
-	echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Installation complete !${endColour}"
+	#ANSI SHADOW patorjk.com
+	installed
 }
 	#DESINSTALLATION
 function uninstallation_ub_deb_parr(){

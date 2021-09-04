@@ -34,7 +34,7 @@ function dependencies_picom(){
         for program in "${dependencies[@]}";do
                 #echo -n para quitar el salto de línea
                 echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Dependencia:${endColour} ${cyanColour}$program${endColour} ${grayColour}...${endColour}"
-    						instalado="$(apt -qq list $programBin 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+    						instalado="$(apt -qq list $program 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
     						test -f /usr/bin/$program
                 instaladoT="$(echo $?)"
                 which $program > /dev/null
@@ -53,7 +53,7 @@ function dependencies_picom(){
         done
   #INSTALLATION BIN PROGRAMS
   for programN in "${programNot[@]}";do
-                echo -en "${cyanColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programN${endColour}${grayColour} ...${endColour}"
+                echo -en "\t\t${yellowColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programN${endColour}${grayColour} ...${endColour}"
           			sleep .25
     						apt-get install $programN -y > /dev/null 2>&1
     						instalado="$(apt -qq list $programN 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
@@ -108,6 +108,7 @@ function config_picom(){
     sed -i 's/blur-kern = "7x7box"/#blur-kern = "7x7box"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/blur-background-exclude = [/#blur-background-exclude = [/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/blur-strength = 5/#blur-strenth = 5/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
+    sed -i 's/corner-radius = 25.0/corner-radius = 0/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     #Blur fuera
     $resGrep="$(grep -A 10 'blur-background-exclude' /home/$userName/.config/picom/picom.conf)" > /dev/null 2>/dev/null
     IFS=$'\n' read -d '' -r -a y <<< "$resGrep"
@@ -121,6 +122,7 @@ function config_picom(){
     for line in "$y[@]";do
           sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     done
+    chown $userName:$userName /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
     echo -e "\nbspc config border_width 0" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
   else

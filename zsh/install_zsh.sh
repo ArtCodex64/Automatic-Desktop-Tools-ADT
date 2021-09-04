@@ -18,11 +18,18 @@ function install_zsh_shell(){
 		echo -e "${greenColour}(OK)${endColour}"
 	else
     apt install zsh -y > /dev/null 2>&1
+		cp ./configurations/.zshrc /home/$userName/
+		cp ./configurations/.p10k.zsh /home/$userName/
+		chmod 644 /home/$userName/.zshrc > /dev/null 2>&1
+		chown $userName:$userName /home/$userName/.zshrc > /dev/null 2>&1
+		chmod 644 /home/$userName/.p10k.zsh > /dev/null 2>&1
+		chown $userName:$userName /home/$userName/.p10k.zsh > /dev/null 2>&1
 		grep -q "/bin/zsh" /etc/shells > /dev/null
     Zsh1="$(echo $?)"
     grep -q "/usr/bin/zsh" /etc/shells > /dev/null
     Zsh2="$(echo $?)"
     if [[ $Zsh1 == "0" || $Zsh2 == "0" ]];then
+			usermod --shell /usr/bin/zsh $userName
     	echo -e "${greenColour}(OK)${endColour}"
 		else
 			echo -e "${redColour}(not installed)${endColour}"
@@ -54,10 +61,10 @@ else
         grep -q "/usr/bin/zsh" /etc/shells > /dev/null
         instaladaZsh2="$(echo $?)"
         if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" ]];then
-    echo "${greenColour}(OK)${endColour}"
-  else
-    echo "${redColour}(uninstalled)${endColour}"
-    exit 0
-  fi
+    			echo "${greenColour}(OK)${endColour}"
+  			else
+    			echo "${redColour}(uninstalled)${endColour}"
+    			exit 0
+  			fi
 fi
 }

@@ -15,8 +15,6 @@ if [[ ! -d "/home/$userName/bspwm" ]];then
   if [[ -d "/home/$userName" ]];then
     /usr/bin/git clone https://github.com/baskerville/bspwm.git /home/$userName/Descargas/bspwm > /dev/null 2>&1
   fi
-else
-  echo -e "${grayColour}(OK)${endColour}"
 fi
 #Move the sxhkd files
 if [[ -d "/home/$userName/Descargas/bspwm" ]];then

@@ -39,7 +39,7 @@ function firefox_firejail_installation(){
         #sleep 1.25
       fi
 ###
-      echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando ${endColour} ${cyanColour}firejail${endColour} ${grayColour}...${endColour}"
+      echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}firejail${endColour} ${grayColour}...${endColour}"
       test -f /usr/bin/firejail > /dev/null
       if [[ "$(echo $?)" == "0" ]];then
               grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
