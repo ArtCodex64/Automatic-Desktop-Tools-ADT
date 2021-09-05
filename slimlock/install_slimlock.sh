@@ -33,7 +33,7 @@ function install_dependencies_slimlock(){
                 which $program > /dev/null
     						instaladoW="$(echo $?)"
                 if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
-      						echo -e "${greencolour}(OK)${endColour}"
+      						echo -e "${greenColour}(OK)${endColour}"
             			if [[ "$(echo $?)" != "0" ]];then
         						echo "$program" | tee -a "/home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt" > /dev/null
                 	fi
@@ -101,4 +101,37 @@ function config_slimlock(){
 	chmod 755 /home/$userName/.config/polybar/scripts/powermenu_alt > /dev/null 2>/dev/null
 	chown $userName:$userName /home/$userName/.config/polybar/scripts/powermenu_alt > /dev/null 2>/dev/null
 	echo -e "${greenColour}(OK)${endColour}"
+}
+
+################################################################################
+################################################################################
+################################################################################
+#UNINSTALL slimlock
+################################################################################
+################################################################################
+################################################################################
+function uninstall_slimlock(){
+	dependenciesSlimlock=("slim" "libpam0g-dev" "libxrandr-dev" "libfreetype6-dev" "libimlib2-dev" "libxft-dev")
+	for program in "${dependenciesSlimlock[@]}"; do
+    grep -q "$program" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
+    if [[ "$(echo $?)" != "0" ]];then
+        echo -en "\t${yellowColour}[+] ${endColour}${grayColour}Uninstalling dependencie: ${endColour} ${cyanColour}$program${endColour}${grayColour} ...${endColour}"
+        apt remove $program -y > /dev/null 2>&1
+        apt purge $program -y > /dev/null 2>&1
+        rm -r /home/$userName/.config/AUTOMATICOESC/picom > /dev/null 2>/dev/null
+        rm -r /home/$userName/.config/picom > /dev/null 2>/dev/null
+        instalado="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
+        test -f /usr/bin/$program
+        instaladoT="$(echo $?)"
+        which $program > /dev/null
+        instaladoW="$(echo $?)"
+        if [[ $instalado == "0" || $instaladoT == "1" || $instaladoW == "1" ]];then
+          echo -e " ${greenColour}(uninstalled)${endColour}"
+        else
+          echo -e "${redColour}(not uninstalled)${endColour}"
+          exit 0
+        fi
+    fi
+    sleep .25
+  done
 }

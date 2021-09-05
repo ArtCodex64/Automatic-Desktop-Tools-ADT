@@ -64,6 +64,7 @@ function configuration_zsh(){
 function uninstall_zsh(){
 userName="$(logname)"
       echo -en "${greenColour}[*]${endColour} ${grayColour}Uninstalling shell${endColour} ${cyanColour}ZSH${endColour} ${grayColour}...${endColour}"
+			usermod --shell /usr/bin/bash $userName > /dev/null 2>/dev/null
       grep -q "/bin/zsh" /etc/shells > /dev/null
       instaladaZsh1="$(echo $?)"
       grep -q "/usr/bin/zsh" /etc/shells > /dev/null
@@ -71,7 +72,7 @@ userName="$(logname)"
 			which zsh
 			instaladaZsh3="$(echo $?)"
       if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
-  		echo "${greenColour}(OK)${endColour}"
+  		echo -e "${greenColour}(OK)${endColour}"
 			else
   			apt remove zsh -y > /dev/null 2>&1
   			apt purge zsh -y > /dev/null 2>&1
@@ -82,7 +83,7 @@ userName="$(logname)"
 				which zsh
 				instaladaZsh3="$(echo $?)"
         if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
-    			echo "${greenColour}(OK)${endColour}"
+    			echo -e "${greenColour}(OK)${endColour}"
   			else
     			echo "${redColour}(uninstalled)${endColour}"
     			exit 0

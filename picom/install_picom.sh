@@ -131,3 +131,36 @@ function config_picom(){
   fi
 
 }
+
+################################################################################
+################################################################################
+################################################################################
+#UNINSTALL PICOM
+################################################################################
+################################################################################
+################################################################################
+function uninstall_picom(){
+  dependenciesPicom=(meson libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev libxcb-glx0-dev)
+  for program in "${dependenciesPicom[@]}"; do
+    grep -q "$program" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
+    if [[ "$(echo $?)" != "0" ]];then
+        echo -en "\t${yellowColour}[+] ${endColour}${grayColour}Uninstalling dependencie: ${endColour} ${cyanColour}$program${endColour}${grayColour} ...${endColour}"
+        apt remove $program -y > /dev/null 2>&1
+        apt purge $program -y > /dev/null 2>&1
+        rm -r /home/$userName/.config/AUTOMATICOESC/picom > /dev/null 2>/dev/null
+        rm -r /home/$userName/.config/picom > /dev/null 2>/dev/null
+        instalado="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
+        test -f /usr/bin/$program
+        instaladoT="$(echo $?)"
+        which $program > /dev/null
+        instaladoW="$(echo $?)"
+        if [[ $instalado == "0" || $instaladoT == "1" || $instaladoW == "1" ]];then
+          echo -e " ${greenColour}(uninstalled)${endColour}"
+        else
+          echo -e "${redColour}(not uninstalled)${endColour}"
+          exit 0
+        fi
+    fi
+    sleep .25
+  done
+}

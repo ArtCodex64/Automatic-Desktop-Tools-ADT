@@ -40,6 +40,8 @@ source ./powerlevel10k/install_powerlevel10k.sh
 source ./rofi/install_rofi.sh
 source ./slimlock/install_slimlock.sh
 source ./sxhkd/install_sxhkd.sh
+source ./uninstall/uninstall_ub_deb_parr.sh
+source ./uninstall/remove_AUTOMATICOESC.sh
 source ./zsh/install_zsh.sh
 
 #Para que al usuario no le aparezca la interfaz de instalación
@@ -85,29 +87,7 @@ function installation_ub_deb_parr(){
 	#ANSI SHADOW patorjk.com
 	installed
 }
-	#DESINSTALLATION
-function uninstallation_ub_deb_parr(){
-	delete_dependencies
-	sleep 1
-	echo -e "${greenColour}[*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}BSPWM SXHKD POLYBAR${endColour} ${grayColour}...${endColour}"
-	uninstall_bspwm
-	sleep 1
-	uninstall_sxhkd
-	sleep 1
-	uninstall_polybar
-	sleep 1
-	uninstall_feh
-	sleep 1
-	uninstall_firefox_firejail
-	sleep 1
-	uninstall_hack_nerd_fonts
-	sleep 1
-	uninstall_zsh
-	sleep 1
-	uninstall_powerlevel10k
-	sleep 1
-	echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Desinstallation complete !${endColour}"
-}
+
 function installation_arch(){
 	bspwm_installation_arch
 	sleep 1
@@ -133,6 +113,7 @@ if [[ "$(id -u)" == "0" ]];then
 			echo "Hola"
 		elif [[ $operating_system == "ubuntu" || $operating_system == "debian" || $operating_system == "parrot" ]];then
 			uninstallation_ub_deb_parr
+			delete_automaticoesc_ub_deb_parr
 		fi
 	elif [[ $1 == "-h" || $1 == "--help" ]];then
 		banner
