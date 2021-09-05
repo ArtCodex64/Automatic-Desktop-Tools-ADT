@@ -9,6 +9,8 @@
 ################################################################################
 function insDepends(){
 	userName="$(logname)"
+	#Actualizando sistema
+	apt update -y > /dev/null 2>/dev/null
 	#INSTALL DEPENDENCIES FUNCTION
 	name=( "$@" )
         for program in "${name[@]}";do

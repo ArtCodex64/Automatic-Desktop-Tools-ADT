@@ -18,6 +18,7 @@ function install_zsh_shell(){
 	instaladaZsh3="$(echo $?)"
   if [[ $instaladaZsh1 == "0" || $instaladaZsh2 == "0" || $instaladaZsh3 == "0" ]];then
 		usermod --shell /usr/bin/zsh $userName > /dev/null 2>/dev/null
+		configuration_zsh
 		echo -e "${greenColour}(OK)${endColour}"
 	else
     apt install zsh -y > /dev/null 2>&1
@@ -35,12 +36,23 @@ function install_zsh_shell(){
 		instaladaZsh3="$(echo $?)"
     if [[ $Zsh1 == "0" || $Zsh2 == "0" || $instaladaZsh3 == "0" ]];then
 			usermod --shell /usr/bin/zsh $userName > /dev/null 2>/dev/null
+			configuration_zsh
     	echo -e "${greenColour}(OK)${endColour}"
 		else
 			echo -e "${redColour}(not installed)${endColour}"
 			exit 0
     fi
 	 fi
+}
+################################################################################
+################################################################################
+################################################################################
+#CONFIGURATION ZSH
+################################################################################
+################################################################################
+################################################################################
+function configuration_zsh(){
+	chown $userName:$userName /home/$userName/.zshrc > /dev/null 2>/dev/null
 }
 ################################################################################
 ################################################################################
