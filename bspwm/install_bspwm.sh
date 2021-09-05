@@ -13,39 +13,20 @@ userName="$(logname)"
 echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
 if [[ ! -d "/home/$userName/bspwm" ]];then
   if [[ -d "/home/$userName" ]];then
-    /usr/bin/git clone https://github.com/baskerville/bspwm.git /home/$userName/Descargas/bspwm > /dev/null 2>&1
+    /usr/bin/git clone https://github.com/baskerville/bspwm.git /home/$userName/.config/AUTOMATICOESC/bspwm > /dev/null 2>&1
   fi
 fi
-#Move the sxhkd files
-if [[ -d "/home/$userName/Descargas/bspwm" ]];then
-  move_bspwm_files
-fi
 #INSTALL BSPWM
-if [[ -d "/home/$userName/bspwm" ]];then
+if [[ -d "/home/$userName/.config/AUTOMATICOESC/bspwm" ]];then
   make_bspwm
   cp_bspwm_example_files
 fi
 tput cnorm
 }
-################################################################################
-################################################################################
-################################################################################
-#MOVE BSPWM FILES TO /home/$userName/
-################################################################################
-################################################################################
-################################################################################
-function move_bspwm_files(){
-userName="$(logname)"
-sleep .25
-if [[ -d "/home/$userName/Descargas/bspwm" ]];then
-  mv /home/$userName/Descargas/bspwm /home/$userName/
-  sleep .25
-fi
-}
 #INSTALL BSPWM WITH MAKE
 function make_bspwm(){
   userName="$(logname)"
-  (cd /home/$userName/bspwm ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install bspwm -y > /dev/null 2>/dev/null)
+  (cd /home/$userName/.config/AUTOMATICOESC/bspwm ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install bspwm -y > /dev/null 2>/dev/null)
 }
 ################################################################################
 ################################################################################
@@ -61,9 +42,10 @@ function cp_bspwm_example_files(){
     mkdir /home/$userName/.config/bspwm
   fi
   sleep .25
-  cp /home/$userName/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
+  cp /home/$userName/.config/AUTOMATICOESC/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/
   sleep .25
   chmod +x /home/$userName/.config/bspwm/bspwmrc
+  chown $userName:$userName /home/$userName/.config/bspwm/bspwmrc
   sleep .25
   echo -e "\nbspc config focus_follows_pointer true" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
   echo -e "${greenColour}(OK)${endColour}"
@@ -79,18 +61,18 @@ function uninstall_bspwm(){
 userName="$(logname)"
 echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}...${endColour}"
       #DELETE BSPWM FILES
-      if [[ -d "/home/$userName/bspwm" ]];then
+      if [[ -d "/home/$userName/.config/AUTOMATICOESC/bspwm" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}bspwm${endColour} ${grayColour}... !${endColour}"
               apt remove --auto-remove bspwm -y > /dev/null 2>/dev/null
               apt purge bspwm -y > /dev/null 2>/dev/null
               apt purge --auto-remove bspwm -y > /dev/null 2>/dev/null
-              rm -r /home/$userName/bspwm > /dev/null 2>/dev/null
+              rm -r /home/$userName/.config/AUTOMATICOESC/bspwm > /dev/null 2>/dev/null
               if [[ -d "/home/$userName/.config/bspwm" ]];then
                       echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}bspwm${endColour} ${grayColour}configuration files ...${endColour}"
                       rm -r /home/$userName/.config/bspwm
                       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Configuration files deleted !${endColour}"
               fi
-              if [[ ! -d "/home/$userName/bspwm" && ! -d "/home/$userName/.config/bspwm" ]];then
+              if [[ ! -d "/home/$userName/.config/AUTOMATICOESC/bspwm" && ! -d "/home/$userName/.config/bspwm" ]];then
                       echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
               else
                       echo -e "\t\t\t${redColour}[*]${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}not uninstalled.${endColour}"

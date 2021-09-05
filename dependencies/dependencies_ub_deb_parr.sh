@@ -12,12 +12,12 @@ function insDepends(){
 	#INSTALL DEPENDENCIES FUNCTION
 	name=( "$@" )
         for program in "${name[@]}";do
-                instalado="$(apt -qq list $program 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+                instalado="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
                 test -f /usr/bin/$program > /dev/null 2>/dev/null
                 instaladoT="$(echo $?)"
                 which $program > /dev/null 2>/dev/null
                 instaladoW="$(echo $?)"
-                if [[ "$instalado" == "[instalado]" || "$instalado" == "[instalado, automático]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+                if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                         grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
                         if [[ "$(echo $?)" != "0" ]];then
 													echo "$programShare" | tee -a "/home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt" > /dev/null
@@ -28,12 +28,12 @@ function insDepends(){
                         echo -en "\t${yellowColour}[+] ${endColour}${grayColour}Dependencia: ${endColour}${cyanColour}$program${endColour} ${grayColour}...${endColour}"
                         sleep .25
                         apt install $program -y > /dev/null 2>&1
-                        instaladoComp="$(apt -qq list $program 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+                        instaladoComp="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
                         test -f /usr/bin/$program
                         instaladoT="$(echo $?)"
                         which $program > /dev/null
                         instaladoW="$(echo $?)"
-                        if [[ "$instaladoComp" == "[instalado]" || "$instalado" == "[instalado, automático]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+                        if [[ $instaladoComp == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                                 echo -e " ${greenColour}(OK)${endColour}"
                         else
                                 echo -e " ${redColour}(not installed)${endColour}"
@@ -66,12 +66,12 @@ echo -e "${cyanColour}[*]${endColour} ${grayColour}Comprobando dependencias nece
       for programBin in "${dependenciesBin[@]}";do
               #echo -n para quitar el salto de línea
               echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Dependencia:${endColour} ${cyanColour}$programBin${endColour} ${grayColour}...${endColour}"
-  						instalado="$(apt -qq list $programBin 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+  						instalado="$(apt -qq list $programBin --installed 2>/dev/null | wc -l)"
   						test -f /usr/bin/$programBin
               instaladoT="$(echo $?)"
               which $programBin > /dev/null
   						instaladoW="$(echo $?)"
-              if [[ $instalado == "[instalado]" || $instaladoT == "0" || $instaladoW == "0" ]];then
+              if [[ $instado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
     						echo -e " ${greenColour}(OK)${endColour}"
                 grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
           			if [[ "$(echo $?)" != "0" ]];then
@@ -88,12 +88,12 @@ for programNB in "${programNotBin[@]}";do
               echo -en "\t\t${yellowColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programNB${endColour}${grayColour} ...${endColour}"
         			sleep .25
   						apt-get install $programNB -y > /dev/null 2>&1
-  						instalado="$(apt -qq list $programNB 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+  						instalado="$(apt -qq list $programNB --installed 2>/dev/null | wc -l)"
   						test -f /usr/bin/$programNB
               instaladoT="$(echo $?)"
               which $programNB > /dev/null
               instaladoW="$(echo $?)"
-              if [[ $instalado == "[instalado]" || $instaladoT == "0" || $instaladoW == "0" ]];then
+              if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                       echo -e " ${greenColour}(OK)${endColour}"
               else
                       echo -e " ${redColour}(not installed)${endColour}"
@@ -114,12 +114,12 @@ tput cnorm
       for programPolybarBin in "${dependenciesPolybarBin[@]}";do
               #echo -n para quitar el salto de línea
               echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Dependencia:${endColour} ${cyanColour}$programPolybarBin${endColour} ${grayColour}...${endColour}"
-              instalado="$(apt -qq list $programPolybarBin 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+              instalado="$(apt -qq list $programPolybarBin --installed 2>/dev/null | wc -l)"
               test -f /usr/bin/$programPolybarBin
               instaladoT="$(echo $?)"
               which $programPolybarBin > /dev/null
               instaladoW="$(echo $?)"
-              if [[ "$instalado" == "[instalado]" || "$instalado" == "[instalado, automático]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+              if [[ "$instalado" == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                       echo -e " ${greenColour}(OK)${endColour}"
     									grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
                       if [[ "$(echo $?)" != "0" ]];then
@@ -137,12 +137,12 @@ tput cnorm
   						echo -en "\t\t${yellowColour}[+] ${endColour}${grayColour}Installing ${endColour} ${cyanColour}$programNPB${endColour}${grayColour} ...${endColour}"
               sleep .25
               apt install $programNPB -y > /dev/null 2>&1
-  						instalado="$(apt -qq list $programNPB 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+  						instalado="$(apt -qq list $programNPB --installed 2>/dev/null | wc -l)"
   						test -f /usr/bin/$programNPB
               instaladoT="$(echo $?)"
               which $programNPB > /dev/null
               instaladoW="$(echo $?)"
-              if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+              if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                       echo -e " ${greenColour}(OK)${endColour}"
               else
                       echo -e " ${redColour}(not installed)${endColour}"

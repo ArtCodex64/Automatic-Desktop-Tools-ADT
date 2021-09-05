@@ -34,12 +34,12 @@ function dependencies_picom(){
         for program in "${dependencies[@]}";do
                 #echo -n para quitar el salto de línea
                 echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Dependencia:${endColour} ${cyanColour}$program${endColour} ${grayColour}...${endColour}"
-    						instalado="$(apt -qq list $program 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+    						instalado="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
     						test -f /usr/bin/$program
                 instaladoT="$(echo $?)"
                 which $program > /dev/null
     						instaladoW="$(echo $?)"
-                if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+                if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
       						echo -e " ${greenColour}(OK)${endColour}"
                   grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
             			if [[ "$(echo $?)" != "0" ]];then
@@ -56,12 +56,12 @@ function dependencies_picom(){
                 echo -en "\t\t${yellowColour}[+] ${endColour}${grayColour}Installing${endColour} ${cyanColour}$programN${endColour}${grayColour} ...${endColour}"
           			sleep .25
     						apt-get install $programN -y > /dev/null 2>&1
-    						instalado="$(apt -qq list $programN 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+    						instalado="$(apt -qq list $programN --installed 2>/dev/null | wc -l)"
     						test -f /usr/bin/$programN
                 instaladoT="$(echo $?)"
                 which $programN > /dev/null
                 instaladoW="$(echo $?)"
-                if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+                if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
                         echo -e " ${greenColour}(OK)${endColour}"
                 else
                         echo -e " ${redColour}(not installed)${endColour}"
@@ -80,9 +80,9 @@ function dependencies_picom(){
 function download_picom(){
   userName="$(logname)"
   echo -en "${cyanColour}[*]${endColour} ${grayColour}Clonando repositorio picom ...${endColour}"
-  git clone https://github.com/ibhagwan/picom.git /home/$userName/picom >> /dev/null 2>/dev/null
-  if [[ -d /home/$userName/picom  ]];then
-    (cd /home/$userName/picom ; git submodule update --init --recursive > /dev/null 2>/dev/null ; meson --buildtype=release . build > /dev/null 2>/dev/null ; ninja -C build > /dev/null 2>&1 ; sudo ninja -C build install > /dev/null 2>&1)
+  git clone https://github.com/ibhagwan/picom.git /home/$userName/.config/AUTOMATICOESC/picom >> /dev/null 2>/dev/null
+  if [[ -d /home/$userName/.config/AUTOMATICOESC/picom  ]];then
+    (cd /home/$userName/.config/AUTOMATICOESC/picom ; git submodule update --init --recursive > /dev/null 2>/dev/null ; meson --buildtype=release . build > /dev/null 2>/dev/null ; ninja -C build > /dev/null 2>&1 ; sudo ninja -C build install > /dev/null 2>&1)
     echo -e "${greenColour}(OK)${endColour}"
   else
     echo -e "${redColour}(not installed)${endColour}"
@@ -100,7 +100,7 @@ function config_picom(){
   userName="$(logname)"
   mkdir /home/$userName/.config/picom
   if [[ -d /home/$userName/.config/picom ]];then
-    cp /home/$userName/Descargas/blue-sky/picom.conf /home/$userName/.config/picom/
+    cp /home/$userName/.config/AUTOMATICOESC/blue-sky/picom.conf /home/$userName/.config/picom/
     sed -i 's/backend = "glx"/#backend = "glx"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/#backend = "xrender"/backend = "xrender"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/blur-method = "dual_kawase"/#blur-method = "dual_kawase"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
@@ -123,8 +123,8 @@ function config_picom(){
           sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     done
     chown $userName:$userName /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
-    echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
-    echo -e "\nbspc config border_width 0" | tee -a /home/$userName/bspwm/bspwmrc > /dev/null 2>/dev/null
+    echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
+    #echo -e "\nbspc config border_width 0" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
   else
     echo -e "${redColour}(no installed)${endColour}"
     exit 0

@@ -13,15 +13,11 @@ function sxhkd_installation(){
       echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/sxhkd" ]];then
               if [[ -d "/home/$userName" ]];then
-                      /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/Descargas/sxhkd > /dev/null 2>/dev/null
+                      /usr/bin/git clone https://github.com/baskerville/sxhkd.git /home/$userName/.config/AUTOMATICOESC/sxhkd > /dev/null 2>/dev/null
               fi
       fi
-#Move the sxhkd files
-if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
-  move_sxhkd_files
-fi
 #INSTALL SXHKD
-if [[ -d "/home/$userName/sxhkd" ]];then
+if [[ -d "/home/$userName/.config/AUTOMATICOESC/sxhkd" ]];then
   make_sxhkd
   cp_sxhkd_example_files
   sxhkdrc_configuration
@@ -29,19 +25,7 @@ fi
 
 tput cnorm
 }
-################################################################################
-################################################################################
-################################################################################
-#MOVE SXHKD FILES TO /home/$userName/
-################################################################################
-################################################################################
-################################################################################
-function move_sxhkd_files(){
-  userName="$(logname)"
-      if [[ -d "/home/$userName/Descargas/sxhkd" ]];then
-              mv /home/$userName/Descargas/sxhkd /home/$userName/
-      fi
-}
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -51,7 +35,7 @@ function move_sxhkd_files(){
 ################################################################################
 function make_sxhkd(){
 userName="$(logname)"
-      (cd /home/$userName/sxhkd ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install sxhkd -y > /dev/null 2>/dev/null)
+      (cd /home/$userName/.config/AUTOMATICOESC/sxhkd ; /usr/bin/make > /dev/null 2>/dev/null; /usr/bin/make install > /dev/null 2>/dev/null; apt install sxhkd -y > /dev/null 2>/dev/null)
 }
 ################################################################################
 ################################################################################
@@ -67,7 +51,7 @@ userName="$(logname)"
               mkdir /home/$userName/.config/sxhkd
       fi
       sleep .25
-      cp /home/$userName/bspwm/examples/sxhkdrc /home/$userName/.config/sxhkd/
+      cp /home/$userName/.config/AUTOMATICOESC/bspwm/examples/sxhkdrc /home/$userName/.config/sxhkd/
 }
 ################################################################################
 ################################################################################
@@ -89,11 +73,11 @@ function sxhkdrc_configuration(){
   sed -i 's/super + {Left,Down,Up,Right}/super + ctrl + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
   echo -e "\n#CUSTOM" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
   echo -e "\nalt + super + {Left,Down,Up,Right}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
-  echo -e "\t/home/$userName/bspwm/scripts/bspwm_resize {west,south,north,east}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
-  mkdir /home/$userName/bspwm/scripts
-  cp ./scripts/bspwm_resize /home/$userName/bspwm/scripts/
-  chmod +x /home/$userName/bspwm/scripts/bspwm_resize
-  chown $userName:$userName /home/$userName/bspwm/scripts/bspwm_resize
+  echo -e "\t/home/$userName/.config/AUTOMATICOESC/bspwm/scripts/bspwm_resize {west,south,north,east}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  mkdir /home/$userName/.config/AUTOMATICOESC/bspwm/scripts
+  cp ./scripts/bspwm_resize /home/$userName/.config/AUTOMATICOESC/bspwm/scripts/
+  chmod +x /home/$userName/.config/AUTOMATICOESC/bspwm/scripts/bspwm_resize
+  chown $userName:$userName /home/$userName/.config/AUTOMATICOESC/bspwm/scripts/bspwm_resize
   echo -e "${greenColour}(OK)${endColour}"
 }
 ################################################################################
@@ -109,7 +93,7 @@ function uninstall_sxhkd(){
       #DELETE SXHKD FILES
       if [[ -d "/home/$userName/sxhkd" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}... !${endColour}"
-              rm -r /home/$userName/sxhkd
+              rm -r /home/$userName/.config/AUTOMATICOESC/sxhkd
               if [[ -d "/home/$userName/.config/sxhkd" ]];then
                       echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}configuration files ...${endColour}"
                       rm -r /home/$userName/.config/sxhkd

@@ -21,7 +21,7 @@ if [[ "$(echo $?)" != "0" ]];then
     fi
   fi
 else
-  echo -e "${greenColour}[*]${endColour} ${cyanColour}Hack Nerd Fonts${endColour} ${grayColour}installed !${endColour}"
+  echo -e "${greenColour}(OK)${endColour}"
 fi
 }
 #UNINSTALLING HACK NERD FONTS

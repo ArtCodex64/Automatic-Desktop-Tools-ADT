@@ -14,7 +14,10 @@ function install_zsh_shell(){
 	instaladaZsh1="$(echo $?)"
 	grep -q "/usr/bin/zsh" /etc/shells > /dev/null
 	instaladaZsh2="$(echo $?)"
-  if [[ $instaladaZsh1 == "0" || $instaladaZsh2 == "0" ]];then
+	which zsh > /dev/null 2>/dev/null
+	instaladaZsh3="$(echo $?)"
+  if [[ $instaladaZsh1 == "0" || $instaladaZsh2 == "0" || $instaladaZsh3 == "0" ]];then
+		usermod --shell /usr/bin/zsh $userName > /dev/null 2>/dev/null
 		echo -e "${greenColour}(OK)${endColour}"
 	else
     apt install zsh -y > /dev/null 2>&1
@@ -28,8 +31,10 @@ function install_zsh_shell(){
     Zsh1="$(echo $?)"
     grep -q "/usr/bin/zsh" /etc/shells > /dev/null
     Zsh2="$(echo $?)"
-    if [[ $Zsh1 == "0" || $Zsh2 == "0" ]];then
-			usermod --shell /usr/bin/zsh $userName
+		which zsh > /dev/null 2>/dev/null
+		instaladaZsh3="$(echo $?)"
+    if [[ $Zsh1 == "0" || $Zsh2 == "0" || $instaladaZsh3 == "0" ]];then
+			usermod --shell /usr/bin/zsh $userName > /dev/null 2>/dev/null
     	echo -e "${greenColour}(OK)${endColour}"
 		else
 			echo -e "${redColour}(not installed)${endColour}"
@@ -51,20 +56,24 @@ userName="$(logname)"
       instaladaZsh1="$(echo $?)"
       grep -q "/usr/bin/zsh" /etc/shells > /dev/null
       instaladaZsh2="$(echo $?)"
-      if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" ]];then
-  echo "${greenColour}(OK)${endColour}"
-else
-  apt remove zsh -y > /dev/null 2>&1
-  apt purge zsh -y > /dev/null 2>&1
-  grep -q "/bin/zsh" /etc/shells > /dev/null
+			which zsh
+			instaladaZsh3="$(echo $?)"
+      if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
+  		echo "${greenColour}(OK)${endColour}"
+			else
+  			apt remove zsh -y > /dev/null 2>&1
+  			apt purge zsh -y > /dev/null 2>&1
+  			grep -q "/bin/zsh" /etc/shells > /dev/null
         instaladaZsh1="$(echo $?)"
         grep -q "/usr/bin/zsh" /etc/shells > /dev/null
         instaladaZsh2="$(echo $?)"
-        if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" ]];then
+				which zsh
+				instaladaZsh3="$(echo $?)"
+        if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
     			echo "${greenColour}(OK)${endColour}"
   			else
     			echo "${redColour}(uninstalled)${endColour}"
     			exit 0
   			fi
-fi
+			fi
 }

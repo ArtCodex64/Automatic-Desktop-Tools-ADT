@@ -27,12 +27,12 @@ function install_dependencies_slimlock(){
         for program in "${dependencies[@]}";do
                 #echo -n para quitar el salto de línea
                 echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Dependencia:${endColour} ${cyanColour}$program${endColour} ${grayColour}...${endColour}"
- 								instalado="$(apt -qq list $program 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+ 								instalado="$(apt -qq list $program --installed 2>/dev/null | wc -l)"
  								test -f /usr/bin/$program
                 instaladoT="$(echo $?)"
                 which $program > /dev/null
     						instaladoW="$(echo $?)"
-                if [[ "$instalado" == "[instalado]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+                if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
       						echo -e "${greencolour}(OK)${endColour}"
             			if [[ "$(echo $?)" != "0" ]];then
         						echo "$program" | tee -a "/home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt" > /dev/null
@@ -52,12 +52,12 @@ function install_dependencies_slimlock(){
 				else
 						apt-get install $programN -y > /dev/null 2>/dev/null
 				fi
-    		instalado="$(apt -qq list $programN 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+    		instalado="$(apt -qq list $programN --installed 2>/dev/null | wc -l)"
     		test -f /usr/bin/$programN
         instaladoT="$(echo $?)"
         which $programN > /dev/null
         instaladoW="$(echo $?)"
-        if [[ $instalado == "[instalado]" || $instaladoT == "0" || $instaladoW == "0" ]];then
+        if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
           echo -e " ${greenColour}(OK)${endColour}"
         else
           echo -e " ${redColour}(not installed)${endColour}"
@@ -78,9 +78,9 @@ function install_dependencies_slimlock(){
 function clone_slimlock(){
 	echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}slimlock${endColour} ${grayColour}...${endColour}"
 	userName="$(logname)"
-	mkdir /home/$userName/slimlock
-	git clone https://github.com/joelburget/slimlock.git /home/$userName/slimlock > /dev/null 2>/dev/null
-	(cd /home/$userName/slimlock/ ; make > /dev/null 2>/dev/null ; make install > /dev/null 2>/dev/null)
+	mkdir /home/$userName/.config/AUTOMATICOESC/slimlock
+	git clone https://github.com/joelburget/slimlock.git /home/$userName/.config/AUTOMATICOESC/slimlock > /dev/null 2>/dev/null
+	(cd /home/$userName/.config/AUTOMATICOESC/slimlock/ ; make > /dev/null 2>/dev/null ; make install > /dev/null 2>/dev/null)
 }
 
 ################################################################################
@@ -92,9 +92,9 @@ function clone_slimlock(){
 ################################################################################
 function config_slimlock(){
 	userName="$(logname)"
-	cp -r /home/$userName/Descargas/blue-sky/slim /etc/ > /dev/null 2>/dev/null
-	cp /home/$userName/Descargas/blue-sky/slim/slimlock.conf /etc/ > /dev/null 2>/dev/null
-	cp -r /home/$userName/Descargas/blue-sky/slim/default/ /usr/share/slim/themes > /dev/null 2>/dev/null
+	cp -r /home/$userName/.config/AUTOMATICOESC/blue-sky/slim /etc/ > /dev/null 2>/dev/null
+	cp /home/$userName/.config/AUTOMATICOESC/blue-sky/slim/slimlock.conf /etc/ > /dev/null 2>/dev/null
+	cp -r /home/$userName/.config/AUTOMATICOESC/blue-sky/slim/default/ /usr/share/slim/themes > /dev/null 2>/dev/null
 	echo -e "\nsuper + alt + x" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null 2>/dev/null
 	echo -e "\tslimlock" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null 2>/dev/null
 	sed -i 's/i3lock/slimlock/' /home/$userName/.config/polybar/scripts/powermenu_alt > /dev/null 2>/dev/null

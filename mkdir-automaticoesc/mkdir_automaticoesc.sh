@@ -23,7 +23,7 @@ tput civis
                       exit 0
               fi
       else
-              echo -e "${cyanColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}AUTOMATICOESC${endColour} ${greenColour}(OK){endColour}"
+              echo -e "${cyanColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}AUTOMATICOESC${endColour} ${greenColour}(OK)${endColour}"
       fi
       tput cnorm
 }

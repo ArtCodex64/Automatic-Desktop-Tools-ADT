@@ -11,21 +11,21 @@
 function install_rofi(){
   echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando ${cyanColour}rofi${endColour} ...${endColour}"
   apt install rofi -y > /dev/null 2>/dev/null
-  instalado="$(apt -qq list rofi 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+  instalado="$(apt -qq list rofi --installed 2>/dev/null | wc -l > /dev/null)"
   test -f /usr/bin/rofi > /dev/null 2>/dev/null
   instaladoT="$(echo $?)"
   which rofi > /dev/null 2>/dev/null
   instaladoW="$(echo $?)"
-  if [[ "$instalado" == "[instalado]" || "$instalado" == "[instalado, automático]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+  if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
     echo -e "${greenColour}(OK)${endColour}"
   else
     apt install rofi -y > /dev/null 2>/dev/null
-    instalado="$(apt -qq list rofi 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+    instalado="$(apt -qq list rofi --installed 2>/dev/null | wc -l > /dev/null)"
     test -f /usr/bin/rofi > /dev/null 2>/dev/null
     instaladoT="$(echo $?)"
     which rofi > /dev/null 2>/dev/null
     instaladoW="$(echo $?)"
-    if [[ "$instalado" == "[instalado]" || "$instalado" == "[instalado, automático]" || "instaladoT" == "0" || "$instaladoW" == "0" ]];then
+    if [[ $instalado == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
       echo -e "${greenColour}(OK)${endColour}"
     else
       echo -e "${redColour}(not installed)${endColour}"

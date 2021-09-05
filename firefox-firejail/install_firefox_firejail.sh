@@ -11,12 +11,12 @@ function firefox_firejail_installation(){
       tput civis
       userName="$(logname)"
       echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}firefox${endColour} ${grayColour}...${endColour}"
-      instalado="$(apt -qq list firefox 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+      instalado="$(apt -qq list firefox --installed 2>/dev/null | wc -l > /dev/null)"
       test -f /usr/bin/firefox
       instaladoT="$(echo $?)"
       which firefox > /dev/null
       instaladoW="$(echo $?)"
-      if [[ "$instalado" == "[instalado]" || "$instaladoT" == "0" || "$instaladoW" == "0" ]];then
+      if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
               grep -q "#END" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
               if [[ "$(echo $?)" != "0" ]];then
                   echo -e "\n#WEB BROWSER" | tee -a "/home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt" > /dev/null
@@ -25,12 +25,12 @@ function firefox_firejail_installation(){
               echo -e "${greenColour}(OK)${endColour}${grayColour}${endColour}"
       else
         apt install firefox -y > /dev/null 2>&1
-        instaladoComp="$(apt -qq list firefox 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
+        instaladoComp="$(apt -qq list firefox --installed 2>/dev/null | wc -l)"
         test -f /usr/bin/firefox
         instaladoT="$(echo $?)"
         which firefox > /dev/null
         instaladoW="$(echo $?)"
-        if [[ "$instaladoComp" == "[instalado]" || "$instaladoT" == "0" || "$instaladoW" == "0" ]];then
+        if [[ $instaladoComp == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
           echo -e "${greenColour}(OK)${endColour}${grayColour}!${endColour}"
         else
           echo -e "${redColour}(not installed)${endColour}"
@@ -50,8 +50,8 @@ function firefox_firejail_installation(){
               echo -e "${greenColour}(OK)${endColour}${grayColour}!${endColour}"
       else
               apt-get install firejail -y > /dev/null 2>&1
-              instaladoComp="$(apt -qq list firejail 2>/dev/null | head -n 1 | cut -d ' ' -f 4)"
-              if [[ "$instaladoComp" == "[instalado]" ]];then
+              instaladoComp="$(apt -qq list firejail --installed 2>/dev/null | wc -l)"
+              if [[ $instaladoComp == "1" ]];then
                       echo -e "${greenColour}(OK)${endColour}"
               else
                       echo -e "${redColour}(not installed)${endColour}"

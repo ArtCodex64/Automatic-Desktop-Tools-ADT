@@ -13,10 +13,10 @@ tput civis
       echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}polybar${endColour} ${grayColour}...${endColour}"
       if [[ ! -d "/home/$userName/polybar" ]];then
               if [[ -d "/home/$userName" ]];then
-                      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/polybar > /dev/null 2>&1
+                      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/.config/AUTOMATICOESC/polybar > /dev/null 2>&1
               fi
 
-              if [[ -d "/home/$userName/polybar" ]];then
+              if [[ -d "/home/$userName/.config/AUTOMATICOESC/polybar" ]];then
                       echo -e "${greenColour}(OK)${endColour}"
                       sleep .25
               else
@@ -29,7 +29,7 @@ tput civis
               echo -e "${greenColour}(ok)${endColour}"
       fi
       #INSTALL POLYBAR
-      if [[ -d "/home/$userName/polybar" ]];then
+      if [[ -d "/home/$userName/.config/AUTOMATICOESC/polybar" ]];then
               echo -en "${cyanColour}[*]${endColour}${grayColour} Making the${endColour} ${cyanColour}polybar${endColour} ${grayColour}... ${endColour}"
               make_polybar
               install_net_tools
@@ -49,11 +49,11 @@ tput civis
 function make_polybar(){
       userName="$(logname)"
 #CREAR DIRECTORIO POLYBAR/BUILD
-  if [[ ! -d "/home/$userName/polybar/build" ]];then
-    mkdir /home/$userName/polybar/build > /dev/null 2>&1
+  if [[ ! -d "/home/$userName/.config/AUTOMATICOESC/polybar/build" ]];then
+    mkdir /home/$userName/.config/AUTOMATICOESC/polybar/build > /dev/null 2>&1
   fi;
 #EJECUTAMOS COMANDO
-  (cd /home/$userName/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
+  (cd /home/$userName/.config/AUTOMATICOESC/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
 }
 ################################################################################
 ################################################################################
@@ -78,8 +78,8 @@ if [[ ! -d "/home/$userName/.config/polybar" ]];then
   mkdir /home/$userName/.config/polybar > /dev/null 2>&1
 fi
 if [[ -d "/home/$userName/.config/polybar" ]];then
-  /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/Descargas/blue-sky > /dev/null 2>&1
-  cp -r /home/$userName/Descargas/blue-sky/polybar/* /home/$userName/.config/polybar/ > /dev/null 2>&1
+  /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/.config/AUTOMATICOESC/blue-sky > /dev/null 2>&1
+  cp -r /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/* /home/$userName/.config/polybar/ > /dev/null 2>&1
   rm /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
   cp ./configurations/current-polybar.ini /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
   chown $userName:$userName /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
@@ -95,7 +95,7 @@ if [[ -d "/home/$userName/.config/polybar" ]];then
   cp ./configurations/ethernet_status_tun.sh /home/$userName/.config/bin/ > /dev/null 2>&1
   chmod +x /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
   chown $userName:$userName /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
-  (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
+  (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
   if [[ $operating_system == "ubuntu" ]];then
     before="content = %{T7}"
     after=${before%?}
@@ -128,7 +128,7 @@ userName="$(logname)"
 echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}POLYBAR${endColour} ${grayColour}...${endColour}"
       if [[ -d "/home/$userName/polybar" ]];then
               echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}polybar${endColour} ${grayColour}... !${endColour}"
-              rm -r /home/$userName/polybar
+              rm -r /home/$userName/.config/AUTOMATICOESC/polybar
               rm -r /home/$userName/.config/polybar
               if [[ ! -d "/home/$userName/polybar" && ! -d "/home/$userName/.config/polybar" ]];then
                       echo -e "\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
@@ -152,7 +152,7 @@ function polybar_installation_arch(){
   dependencies=(git alsa-lib cairo curl jsoncpp libmpdclient libpulse xcb-util-cursor xcb-util-image xcb-util-wm xcb-util-xrm cmake i3-wm pkg-config python python-packaging python-sphinx polybar)
   for program in "${dependencies[@]}";do
     if [[ $program == "polybar" ]];then
-      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/polybar > /dev/null 2>&1
+      /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/.config/AUTOMATICOESC/polybar > /dev/null 2>&1
     else
       yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
     fi
@@ -207,11 +207,11 @@ function polybar_installation_arch(){
 function make_polybar_arch(){
       userName="$(logname)"
       #CREAR DIRECTORIO POLYBAR/BUILD
-      if [[ ! -d "/home/$userName/polybar/build" ]];then
-        mkdir /home/$userName/polybar/build > /dev/null 2>&1
+      if [[ ! -d "/home/$userName/.config/AUTOMATICOESC/polybar/build" ]];then
+        mkdir /home/$userName/.config/AUTOMATICOESC/polybar/build > /dev/null 2>&1
       fi;
       #EJECUTAMOS COMANDO
-      (cd /home/$userName/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
+      (cd /home/$userName/.config/AUTOMATICOESC/polybar/build/ ; cmake .. > /dev/null 2>&1 ; make -j $(nproc) > /dev/null 2>&1 ; make install > /dev/null 2>&1)
       echo -e "\t${greenColour}[*] ${endColour}${grayColour}Instalación de POLYBAR finalizada !${endColour}"
 }
   #COFIGURE POLYBAR ARCH LINUX
@@ -223,15 +223,15 @@ if [[ ! -d "/home/$userName/.config/polybar" ]];then
   if [[ -d "/home/$userName/.config/polybar" ]];then
     echo -e "\t${greenColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}/home/$userName/.config/polybar${endColour} ${grayColour}creado !${endColour}"
     echo -e "\t${greenColour}[*]${endColour} ${grayColour}Clonando repositorio de git:${endColour} ${cyanColour}Blue-sky${endColour} ${grayColour}...${endColour}"
-    /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/Descargas/blue-sky > /dev/null 2>&1
+    /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/.config/AUTOMATICOESC/blue-sky > /dev/null 2>&1
     echo -en "\t${greenColour}[*]${endColour} ${grayColour}Copiando archivos de${endColour} ${cyanColour}blue-sky${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/Descargas/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
+    (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
     echo -e "${greenColour}(OK)${endColour}"
     echo -en "\t${greenColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
     echo "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
     echo -e "${greenColour}(OK)${endColour}"
     echo -en "\t${greenColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/Descargas/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
+    (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
     echo -e "${greenColour}(OK)${endColour}"
   fi
 fi
