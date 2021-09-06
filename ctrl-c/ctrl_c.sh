@@ -11,7 +11,7 @@
 trap ctrl_c INT
 
 function ctrl_c(){
-echo "${redColour}[*]${endColour}\n\n\t${grayColour}Exiting ...${endColour}"
+echo -e "${redColour}[*]${endColour}\n\n\t${grayColour}Exiting ...${endColour}"
 tput cnorm
 exit 0
 }

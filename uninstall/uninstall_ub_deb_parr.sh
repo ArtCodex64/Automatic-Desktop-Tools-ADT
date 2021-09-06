@@ -1,7 +1,11 @@
 #!/bin/bash
 
+source ./uninstall/remove_AUTOMATICOESC.sh
+
 #DESINSTALLATION
 function uninstallation_ub_deb_parr(){
+uninstalling
+sleep 1
 delete_dependencies
 sleep 1
 echo -e "${greenColour}[*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}BSPWM SXHKD POLYBAR${endColour} ${grayColour}...${endColour}"
@@ -30,5 +34,9 @@ sleep 1
 uninstall_lsd
 sleep 1
 uninstall_slimlock
+sleep 1
+delete_automaticoesc_ub_deb_parr
+sleep 1
+uninstalled
 sleep 1
 }

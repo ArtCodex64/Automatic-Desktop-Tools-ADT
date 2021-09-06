@@ -89,23 +89,22 @@ function sxhkdrc_configuration(){
 ################################################################################
 function uninstall_sxhkd(){
   userName="$(logname)"
-  echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}...${endColour}"
+  echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}!${endColour}"
       #DELETE SXHKD FILES
-      if [[ -d "/home/$userName/sxhkd" ]];then
-              echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}... !${endColour}"
+      if [[ -d "/home/$userName/.config/AUTOMATICOESC/sxhkd" ]];then
               rm -r /home/$userName/.config/AUTOMATICOESC/sxhkd
               if [[ -d "/home/$userName/.config/sxhkd" ]];then
-                      echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}configuration files ...${endColour}"
+                      echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}configuration files ...${endColour}"
                       rm -r /home/$userName/.config/sxhkd
-                      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Configuration files deleted !${endColour}"
+                      echo -e "\t${greenColour}(OK)${endColour}"
               fi
               if [[ ! -d "/home/$userName/sxhkd" && ! -d "/home/$userName/.config/sxhkd" ]];then
-                      echo -e "\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
+                      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
               else
-                      echo -e "\t\t${redColour}[*]${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}not uninstalled.${endColour}"
+                      echo -e "\t${redColour}[*]${endColour} ${cyanColour}SXHKD${endColour} ${grayColour}not uninstalled.${endColour}"
               fi
       fi
-      echo -e "\t\t\t${greenColour}[*][*][*]${endColour} ${grayColour}Uninstall completed !${endColour}"
+      echo -e "\t\t\t${greenColour}[-]${endColour} ${grayColour}Uninstall completed !${endColour}"
 }
 
 ################################################################################

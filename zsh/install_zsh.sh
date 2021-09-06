@@ -69,18 +69,18 @@ userName="$(logname)"
       instaladaZsh1="$(echo $?)"
       grep -q "/usr/bin/zsh" /etc/shells > /dev/null
       instaladaZsh2="$(echo $?)"
-			which zsh
+			which zsh >/dev/null 2>/dev/null
 			instaladaZsh3="$(echo $?)"
       if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
   		echo -e "${greenColour}(OK)${endColour}"
 			else
-  			apt remove zsh -y > /dev/null 2>&1
-  			apt purge zsh -y > /dev/null 2>&1
+  			apt remove zsh -y > /dev/null 2>/dev/null
+  			apt purge zsh -y > /dev/null 2>/dev/null
   			grep -q "/bin/zsh" /etc/shells > /dev/null
         instaladaZsh1="$(echo $?)"
         grep -q "/usr/bin/zsh" /etc/shells > /dev/null
         instaladaZsh2="$(echo $?)"
-				which zsh
+				which zsh > /dev/null 2>/dev/null
 				instaladaZsh3="$(echo $?)"
         if [[ $instaladaZsh1 != "0" || $instaladaZsh2 != "0" || $instaladaZsh3 != "0" ]];then
     			echo -e "${greenColour}(OK)${endColour}"

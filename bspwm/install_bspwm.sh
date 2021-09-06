@@ -59,26 +59,26 @@ function cp_bspwm_example_files(){
 ################################################################################
 function uninstall_bspwm(){
 userName="$(logname)"
-echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}...${endColour}"
+echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}!${endColour}"
       #DELETE BSPWM FILES
       if [[ -d "/home/$userName/.config/AUTOMATICOESC/bspwm" ]];then
-              echo -e "\t${yellowColour}[*]${endColour} ${grayColour}Uninstalling${endColour} ${cyanColour}bspwm${endColour} ${grayColour}... !${endColour}"
-              apt remove --auto-remove bspwm -y > /dev/null 2>/dev/null
+              (cd /home/$userName/.config/AUTOMATICOESC/bspwm ; make uninstall > /dev/null 2>/dev/null)
+              apt remove bspwm -y > /dev/null 2>/dev/null
+              apt autoremove bspwm -y > /dev/null 2>/dev/null
               apt purge bspwm -y > /dev/null 2>/dev/null
-              apt purge --auto-remove bspwm -y > /dev/null 2>/dev/null
               rm -r /home/$userName/.config/AUTOMATICOESC/bspwm > /dev/null 2>/dev/null
               if [[ -d "/home/$userName/.config/bspwm" ]];then
-                      echo -e "\t\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}bspwm${endColour} ${grayColour}configuration files ...${endColour}"
+                      echo -en "\t${yellowColour}[*]${endColour} ${grayColour}Deleting${endColour} ${cyanColour}bspwm${endColour} ${grayColour}configuration files ...${endColour}"
                       rm -r /home/$userName/.config/bspwm
-                      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Configuration files deleted !${endColour}"
+                      echo -e "${greenColour}(OK)${endColour}"
               fi
               if [[ ! -d "/home/$userName/.config/AUTOMATICOESC/bspwm" && ! -d "/home/$userName/.config/bspwm" ]];then
-                      echo -e "\t\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
+                      echo -e "\t\t${greenColour}[*]${endColour} ${grayColour}Uninstalled${endColour} !${endColour}"
               else
-                      echo -e "\t\t\t${redColour}[*]${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}not uninstalled.${endColour}"
+                      echo -e "\t\t${redColour}[*]${endColour} ${cyanColour}BSPWM${endColour} ${grayColour}not uninstalled.${endColour}"
               fi
       fi
-      echo -e "\t\t\t${greenColour}[*][*][*]${endColour} ${grayColour}Uninstall completed !${endColour}"
+      echo -e "\t\t\t${greenColour}[-]${endColour} ${grayColour}Uninstall completed !${endColour}"
 }
 ################################################################################
 ################################################################################
@@ -91,7 +91,7 @@ function bspwm_installation_arch(){
 tput civis
 userName="$(logname)"
 echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
-dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm)
+dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm net-tools)
 #mkdir ~/.config
 #mkdir ~/.config/bspwm
 #mkdir ~/.config/sxhkd
@@ -115,19 +115,19 @@ for program in "${dependencies[@]}";do
     sleep .25
   else
     if [[ $program == "xorg" ]];then
-      yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>&1
+      yes "" "" | pacman -Sy $program --noconfirm > /dev/null 2>/dev/null
       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
     elif [[ $program == "bspwm" || $program == "sxhkd" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+      yes | pacman -Sy $program --noconfirm > /dev/null 2>/dev/null
       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
     elif [[ $program == "lightdm" || $program == "lightdm-gtk-greeter" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+      yes | pacman -Sy $program --noconfirm > /dev/null 2>/dev/null
       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
     elif [[ $program == "lightdm-gtk-greeter-settings" ]];then
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+      yes | pacman -Sy $program --noconfirm > /dev/null 2>/dev/null
       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
     else
-      yes | pacman -Sy $program --noconfirm > /dev/null 2>&1
+      yes | pacman -Sy $program --noconfirm > /dev/null 2>/dev/null
       echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(OK)${endColour}"
     fi
     sleep .25

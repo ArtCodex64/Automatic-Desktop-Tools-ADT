@@ -7,8 +7,6 @@
 # I share the code so that whoever wants to study it and improve it.
 # If I finish the script in the future I will share it
 
-
-
 ################################################################################
 ################################################################################
 ################################################################################
@@ -31,10 +29,13 @@ source ./feh/install_feh.sh
 source ./firefox-firejail/install_firefox_firejail.sh
 source ./hack-nerd-fonts/install_hack_nerd_fonts.sh
 source ./help/help.sh
+source ./install/install_ub_deb_parr_file.sh
+source ./install/install_arch_file.sh
 source ./lsd/install_lsd.sh
 source ./mkdir-automaticoesc/mkdir_automaticoesc.sh
 source ./os-detect/os_detect.sh
 source ./picom/install_picom.sh
+source ./picom/install_picom_arch.sh
 source ./polybar/install_polybar.sh
 source ./powerlevel10k/install_powerlevel10k.sh
 source ./rofi/install_rofi.sh
@@ -44,58 +45,9 @@ source ./uninstall/uninstall_ub_deb_parr.sh
 source ./uninstall/remove_AUTOMATICOESC.sh
 source ./zsh/install_zsh.sh
 
+
 #Para que al usuario no le aparezca la interfaz de instalación
 export DEBIAN_FRONTEND=noninteractive
-	#POLYBAR
-	#########################
-	#INSTALLATION
-function installation_ub_deb_parr(){
-	mkdir_escritorio_automatico
-	sleep 1
-	dependencies
-  sleep 1
-  bspwm_installation
-  sleep 1
-  sxhkd_installation
-  sleep 1
-  polybar_installation
-  sleep 1
-	install_picom
-	sleep 1
-	install_rofi
-	sleep 1
-  feh_installation
-  sleep 1
-  firefox_firejail_installation
-  sleep 1
-  hack_nerd_fonts_installation
-	sleep 1
-	install_zsh_shell
-	sleep 1
-	install_powerlevel_10k
-	sleep 1
-	install_bat
-	sleep 1
-	install_lsd
-	sleep 1
-	install_slim_lock
-	sleep 1
-	config_cursor
-	sleep 1
-	end_mark
-	sleep 1
-	#ANSI SHADOW patorjk.com
-	installed
-}
-
-function installation_arch(){
-	bspwm_installation_arch
-	sleep 1
-	polybar_installation_arch
-	sleep 1
-	hack_nerd_fonts_installation_arch
-	sleep 1
-}
 
 	#MAIN FUNCTION
 if [[ "$(id -u)" == "0" ]];then
@@ -113,7 +65,6 @@ if [[ "$(id -u)" == "0" ]];then
 			echo "Hola"
 		elif [[ $operating_system == "ubuntu" || $operating_system == "debian" || $operating_system == "parrot" ]];then
 			uninstallation_ub_deb_parr
-			delete_automaticoesc_ub_deb_parr
 		fi
 	elif [[ $1 == "-h" || $1 == "--help" ]];then
 		banner

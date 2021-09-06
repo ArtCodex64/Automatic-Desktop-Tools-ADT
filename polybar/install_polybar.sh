@@ -11,7 +11,7 @@ function polybar_installation(){
 tput civis
       userName="$(logname)"
       echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}polybar${endColour} ${grayColour}...${endColour}"
-      if [[ ! -d "/home/$userName/polybar" ]];then
+      if [[ ! -d "/home/$userName/.config/AUTOMATICOESC/polybar" ]];then
               if [[ -d "/home/$userName" ]];then
                       /usr/bin/git clone --recursive https://github.com/polybar/polybar /home/$userName/.config/AUTOMATICOESC/polybar > /dev/null 2>&1
               fi
@@ -145,6 +145,13 @@ echo -e "${greenColour}[*][*][*]${endColour} ${grayColour}Uninstalling files${en
 ################################################################################
 ################################################################################
 ################################################################################
+################################################################################
+################################################################################
+################################################################################
+#Installatión polybar ARCH-LINUX
+################################################################################
+################################################################################
+################################################################################
 function polybar_installation_arch(){
   tput civis
   userName="$(logname)"
@@ -188,21 +195,6 @@ function polybar_installation_arch(){
   done
   make_polybar_arch
   configure_polybar_arch
-
-  pacman -Qs polybar > /dev/null 2>&1
-  instaladoP="$(echo $?)"
-  test -f /usr/local/bin/polybar > /dev/null 2>&1
-  instaladoT="$(echo $?)"
-  which polybar > /dev/null 2>&1
-  if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
-    echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}polybar${endColour} ${greenColour}(OK)${endColour}"
-  else
-      echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}$program${endColour} ${redColour}(not installed)${endColour}"
-      sleep .25
-      tput cnorm
-      exit 0
-  fi
-
 }
 function make_polybar_arch(){
       userName="$(logname)"
@@ -215,24 +207,34 @@ function make_polybar_arch(){
       echo -e "\t${greenColour}[*] ${endColour}${grayColour}Instalación de POLYBAR finalizada !${endColour}"
 }
   #COFIGURE POLYBAR ARCH LINUX
-function configure_polybar_arch(){
-userName="$(logname)"
-if [[ ! -d "/home/$userName/.config/polybar" ]];then
-  echo -e "${cyanColour}[*]${endColour} ${grayColour}Configurado POLYBAR ...${endColour}"
-  mkdir /home/$userName/.config/polybar > /dev/null 2>&1
-  if [[ -d "/home/$userName/.config/polybar" ]];then
-    echo -e "\t${greenColour}[*]${endColour} ${grayColour}Directorio${endColour} ${cyanColour}/home/$userName/.config/polybar${endColour} ${grayColour}creado !${endColour}"
-    echo -e "\t${greenColour}[*]${endColour} ${grayColour}Clonando repositorio de git:${endColour} ${cyanColour}Blue-sky${endColour} ${grayColour}...${endColour}"
-    /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/.config/AUTOMATICOESC/blue-sky > /dev/null 2>&1
-    echo -en "\t${greenColour}[*]${endColour} ${grayColour}Copiando archivos de${endColour} ${cyanColour}blue-sky${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/ ; cp * -r /home/$userName/.config/polybar/ > /dev/null 2>&1)
-    echo -e "${greenColour}(OK)${endColour}"
-    echo -en "\t${greenColour}[*]${endColour} ${grayColour}Añadiendo configuración al archivo${endColour} ${cyanColour}/home/$userName/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
-    echo "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
-    echo -e "${greenColour}(OK)${endColour}"
-    echo -en "\t${greenColour}[*]${endColour} ${grayColour}Copiando archivos del directorio${endColour} ${cyanColour}blue-sky/polybar/fonts${endColour} ${grayColour}...${endColour}"
-    (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
-    echo -e "${greenColour}(OK)${endColour}"
+  function configure_polybar_arch(){
+  userName="$(logname)"
+  if [[ ! -d "/home/$userName/.config/polybar" ]];then
+    mkdir /home/$userName/.config/polybar > /dev/null 2>&1
   fi
-fi
-}
+  if [[ -d "/home/$userName/.config/polybar" ]];then
+    /usr/bin/git clone https://github.com/VaughnValle/blue-sky.git /home/$userName/.config/AUTOMATICOESC/blue-sky > /dev/null 2>&1
+    cp -r /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/* /home/$userName/.config/polybar/ > /dev/null 2>&1
+    rm /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+    cp ./configurations/current-polybar.ini /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+    chown $userName:$userName /home/$userName/.config/polybar/current.ini > /dev/null 2>/dev/null
+    rm /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+    cp ./configurations/launch-polybar.sh /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+    chown $userName:$userName /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+    chmod +x /home/$userName/.config/polybar/launch.sh > /dev/null 2>/dev/null
+    echo -e "/home/$userName/.config/polybar/./launch.sh" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>&1
+    mkdir /home/$userName/.config/bin > /dev/null 2>&1
+    cp ./configurations/ethernet_status.sh /home/$userName/.config/bin/ > /dev/null 2>&1
+    chmod +x /home/$userName/.config/bin/ethernet_status.sh > /dev/null 2>&1
+    chown $userName:$userName /home/$userName/.config/bin/ethernet_status.sh > /dev/null 2>&1
+    cp ./configurations/ethernet_status_tun.sh /home/$userName/.config/bin/ > /dev/null 2>&1
+    chmod +x /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+    chown $userName:$userName /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+    (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
+    if [[ $operating_system == "arch" ]];then
+      before="content = %{T7}"
+      after=${before%?}
+      sed -i "s/$before/$after/" /home/$(logname)/.config/polybar/current.ini
+    fi
+  fi
+  }
