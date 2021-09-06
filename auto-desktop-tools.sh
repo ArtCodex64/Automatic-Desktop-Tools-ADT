@@ -26,6 +26,7 @@ source ./firefox-firejail/install_firefox_firejail.sh
 source ./dependencies/dependencies_ub_deb_parr.sh
 source ./end/end.sh
 source ./feh/install_feh.sh
+source ./feh/install_feh_arch.sh
 source ./firefox-firejail/install_firefox_firejail.sh
 source ./hack-nerd-fonts/install_hack_nerd_fonts.sh
 source ./help/help.sh
@@ -39,6 +40,7 @@ source ./picom/install_picom_arch.sh
 source ./polybar/install_polybar.sh
 source ./powerlevel10k/install_powerlevel10k.sh
 source ./rofi/install_rofi.sh
+source ./rofi/install_rofi_arch.sh
 source ./slimlock/install_slimlock.sh
 source ./sxhkd/install_sxhkd.sh
 source ./uninstall/uninstall_ub_deb_parr.sh

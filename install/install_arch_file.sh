@@ -11,6 +11,10 @@ function installation_arch(){
 	sleep 1
 	install_picom_arch
 	sleep 1
+	install_rofi_arch
+	sleep 1
+	feh_installation_arch
+	sleep 1
 	hack_nerd_fonts_installation_arch
 	sleep 1
 }

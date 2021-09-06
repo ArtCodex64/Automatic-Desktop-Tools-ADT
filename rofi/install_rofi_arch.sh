@@ -8,31 +8,32 @@
 ################################################################################
 ################################################################################
 
-function install_rofi(){
+function install_rofi_arch(){
   echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando ${cyanColour}rofi${endColour} ...${endColour}"
-  apt install rofi -y > /dev/null 2>/dev/null
-  instalado="$(apt -qq list rofi --installed 2>/dev/null | wc -l > /dev/null)"
-  test -f /usr/bin/rofi > /dev/null 2>/dev/null
+  pacman -Qs rofi > /dev/null 2>&1
+  instaladoP="$(echo $?)"
+  test -f /usr/bin/rofi > /dev/null 2>&1
   instaladoT="$(echo $?)"
-  which rofi > /dev/null 2>/dev/null
+  which rofi > /dev/null 2>&1
   instaladoW="$(echo $?)"
-  if [[ $instalado == "1" || $instaladoT == "0" || $instaladoW == "0" ]];then
+  if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
     echo -e "${greenColour}(OK)${endColour}"
   else
-    apt install rofi -y > /dev/null 2>/dev/null
-    instalado="$(apt -qq list rofi --installed 2>/dev/null | wc -l > /dev/null)"
+    yes | pacman -Sy rofi --noconfirm > /dev/null 2>/dev/null
+    pacman -Qs rofi > /dev/null 2>/dev/null
+    instaladoP="$(echo $?)"
     test -f /usr/bin/rofi > /dev/null 2>/dev/null
     instaladoT="$(echo $?)"
     which rofi > /dev/null 2>/dev/null
     instaladoW="$(echo $?)"
-    if [[ $instalado == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
+    if [[ $instaladoP == "0" || $instaladoT == "0" || $instaladoW == "0" ]];then
       echo -e "${greenColour}(OK)${endColour}"
     else
       echo -e "${redColour}(not installed)${endColour}"
       exit 0
     fi
   fi
-  config_rofi
+  config_rofi_arch
 }
 ################################################################################
 ################################################################################
@@ -42,7 +43,7 @@ function install_rofi(){
 ################################################################################
 ################################################################################
 
-function config_rofi(){
+function config_rofi_arch(){
   userName="$(logname)"
   sed -i 's/super + @space/super + d/' /home/$userName/.config/sxhkd/sxhkdrc
   sed -i 's/dmenu_run/rofi -show run/' /home/$userName/.config/sxhkd/sxhkdrc
@@ -55,20 +56,20 @@ function config_rofi(){
 ################################################################################
 ################################################################################
 ################################################################################
-function uninstall_rofi(){
+function uninstall_rofi_arch(){
     grep -q "rofi" /home/$userName/.config/AUTOMATICOESC/recovery/installedPrograms.txt
     if [[ "$(echo $?)" != "0" ]];then
         echo -en "\t${yellowColour}[+] ${endColour}${grayColour}Uninstalling dependencie: ${endColour} ${cyanColour}rofi${endColour}${grayColour} ...${endColour}"
-        apt remove rofi -y > /dev/null 2>&1
-        apt purge rofi -y > /dev/null 2>&1
+        pacman -R rofi > /dev/null 2>/dev/null
         rm -r /home/$userName/.config/AUTOMATICOESC/picom > /dev/null 2>/dev/null
         rm -r /home/$userName/.config/picom > /dev/null 2>/dev/null
-        instaladoR="$(apt -qq list rofi --installed 2>/dev/null | wc -l)"
-        test -f /usr/bin/rofi
+        pacman -Qs rofi > /dev/null 2>/dev/null
+        instaladoP="$(echo $?)"
+        test -f /usr/bin/rofi > /dev/null 2>/dev/null
         instaladoT="$(echo $?)"
-        which rofi > /dev/null
+        which rofi > /dev/null 2>/dev/null
         instaladoW="$(echo $?)"
-        if [[ $instaladoR == "1" || $instaladoT == "1" || $instaladoW == "1" ]];then
+        if [[ $instaladoP == "1" || $instaladoT == "1" || $instaladoW == "1" ]];then
           echo -e " ${greenColour}(uninstalled)${endColour}"
         else
           echo -e "${redColour}(not uninstalled)${endColour}"
