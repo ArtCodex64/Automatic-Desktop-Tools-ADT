@@ -15,6 +15,7 @@
 ################################################################################
 ################################################################################
 source ./banner/banner.sh
+source ./bat/install_bat_arch.sh
 source ./bat/install_bat.sh
 source ./bspwm/install_bspwm.sh
 source ./colours/colours.sh
@@ -27,24 +28,30 @@ source ./dependencies/dependencies_ub_deb_parr.sh
 source ./end/end.sh
 source ./feh/install_feh.sh
 source ./feh/install_feh_arch.sh
+source ./firefox-firejail/install_firefox_firejail_arch.sh
 source ./firefox-firejail/install_firefox_firejail.sh
 source ./hack-nerd-fonts/install_hack_nerd_fonts.sh
 source ./help/help.sh
 source ./install/install_ub_deb_parr_file.sh
 source ./install/install_arch_file.sh
+source ./lsd/install_lsd_arch.sh
 source ./lsd/install_lsd.sh
 source ./mkdir-automaticoesc/mkdir_automaticoesc.sh
 source ./os-detect/os_detect.sh
 source ./picom/install_picom.sh
 source ./picom/install_picom_arch.sh
 source ./polybar/install_polybar.sh
+source ./powerlevel10k/install_powerlevel10k_arch.sh
 source ./powerlevel10k/install_powerlevel10k.sh
+source ./pywal/install_pywal.sh
 source ./rofi/install_rofi.sh
 source ./rofi/install_rofi_arch.sh
+source ./slimlock/install_slimlock_arch.sh
 source ./slimlock/install_slimlock.sh
 source ./sxhkd/install_sxhkd.sh
 source ./uninstall/uninstall_ub_deb_parr.sh
 source ./uninstall/remove_AUTOMATICOESC.sh
+source ./zsh/install_zsh_arch.sh
 source ./zsh/install_zsh.sh
 
 

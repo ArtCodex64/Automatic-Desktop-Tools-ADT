@@ -63,12 +63,12 @@ function uninstall_rofi(){
         apt purge rofi -y > /dev/null 2>&1
         rm -r /home/$userName/.config/AUTOMATICOESC/picom > /dev/null 2>/dev/null
         rm -r /home/$userName/.config/picom > /dev/null 2>/dev/null
-        instaladoR="$(apt -qq list rofi --installed 2>/dev/null | wc -l)"
+        instalado="$(apt -qq list rofi --installed 2>/dev/null | wc -l)"
         test -f /usr/bin/rofi
         instaladoT="$(echo $?)"
         which rofi > /dev/null
         instaladoW="$(echo $?)"
-        if [[ $instaladoR == "1" || $instaladoT == "1" || $instaladoW == "1" ]];then
+        if [[ $instalado == "0" || $instaladoT == "1" || $instaladoW == "1" ]];then
           echo -e " ${greenColour}(uninstalled)${endColour}"
         else
           echo -e "${redColour}(not uninstalled)${endColour}"

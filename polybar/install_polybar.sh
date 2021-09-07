@@ -95,6 +95,7 @@ if [[ -d "/home/$userName/.config/polybar" ]];then
   cp ./configurations/ethernet_status_tun.sh /home/$userName/.config/bin/ > /dev/null 2>&1
   chmod +x /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
   chown $userName:$userName /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+  mkdir /usr/share/fonts/truetype > /dev/null 2>/dev/null
   (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
   if [[ $operating_system == "ubuntu" ]];then
     before="content = %{T7}"
@@ -230,6 +231,7 @@ function make_polybar_arch(){
     cp ./configurations/ethernet_status_tun.sh /home/$userName/.config/bin/ > /dev/null 2>&1
     chmod +x /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
     chown $userName:$userName /home/$userName/.config/bin/ethernet_status_tun.sh > /dev/null 2>&1
+    mkdir /usr/share/fonts/truetype > /dev/null 2>/dev/null
     (cd /home/$userName/.config/AUTOMATICOESC/blue-sky/polybar/fonts ; cp * /usr/share/fonts/truetype/ > /dev/null 2>&1 ; fc-cache -v > /dev/null 2>&1)
     if [[ $operating_system == "arch" ]];then
       before="content = %{T7}"

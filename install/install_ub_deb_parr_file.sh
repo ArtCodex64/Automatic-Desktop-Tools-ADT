@@ -28,6 +28,8 @@ install_zsh_shell
 sleep 1
 install_powerlevel_10k
 sleep 1
+install_pywal
+sleep 1
 install_bat
 sleep 1
 install_lsd

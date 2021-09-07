@@ -101,6 +101,7 @@ function config_picom(){
   mkdir /home/$userName/.config/picom
   if [[ -d /home/$userName/.config/picom ]];then
     cp /home/$userName/.config/AUTOMATICOESC/blue-sky/picom.conf /home/$userName/.config/picom/
+    chown $userName:$userName /home/$userName/.config/picom/picom.conf
     sed -i 's/backend = "glx"/#backend = "glx"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/#backend = "xrender"/backend = "xrender"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/blur-method = "dual_kawase"/#blur-method = "dual_kawase"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null

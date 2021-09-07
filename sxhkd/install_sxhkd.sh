@@ -117,9 +117,9 @@ function uninstall_sxhkd(){
 function sxhkd_installation_arch(){
 tput civis
 userName="$(logname)"
-echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
+echo -en "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}sxhkd${endColour} ${grayColour}...${endColour}"
 dependencies=(xorg-server xorg-xinit xf86-video-qxl sxhkd picom)
-which sxhkd
+which sxhkd > /dev/null 2>/dev/null
 instalado="$(echo $?)"
 if [[ $instalado != "0" ]];then
   for program in "${dependencies[@]}";do
@@ -129,38 +129,44 @@ if [[ $instalado != "0" ]];then
   instalado="$(echo $?)"
   if [[ $instalado == "0" ]];then
     for program in "${dependencies[@]}";do
-      echo -e "\t${greenColour}[*]${endColour} ${grayColour}Archivos de ${endColour} ${cyanColour}$program${endColour} ${greenColour}(installed)${endColour}"
+      echo -e "${greenColour}(OK)${endColour}"
       sleep .25
     done
   else
     for program in "${dependencies[@]}";do
-      echo -e "\t${redColour}[*]${endColour}${grayColour}Error:${endColour} ${cyanColour}bspwm${endColour} ${redColour}(not installed)${endColour}"
+      echo -e "${redColour}(not installed)${endColour}"
       sleep .25
       tput cnorm
       exit 0
     done
   fi
 else
-  echo -e "\t${greenColour}[*]${endColour} ${grayColour}BSWPWM files installed !${endColour}"
+  echo -e "\t${greenColour}(OK)${endColour}"
 fi
 
-mkdir_sxhkd
-cp_sxhkd
-cp_sxkhd
+mkdir_sxhkd_arch
+cp_sxhkdrc_arch
+sxhkdrc_configuration_arch
 
 tput cnorm
 }
 
-function mkdir_sxhkd(){
+function mkdir_sxhkd_arch(){
   userName="$(logname)"
   echo -e "${cyanColour}[*]${endColour} ${grayColour}Creando directorio${endColour} ${cyanColour}~/.config/bspwm${endColour} ${grayColour}...${endColour}"
-  mkdir /home/$userName/.config/sxhkd
-  if [[ -d "/home/$userName/.config/sxhkd" ]];then
-    echo -e "\t${grayColour}Direcotorio creado !${endColour}"
+  if [[ ! -d "/home/$userName/.config/sxhkd" ]];then
+    mkdir /home/$userName/.config/sxhkd
+    if [[ ! -d "home/$userName/.config/sxhkd" ]];then
+      echo -e "${redColour}(not created)${endColour}"
+    else
+      echo -e "${greenColour}(OK)${endColour}"
+    fi
+  else
+    echo -e "${greenColour}(OK)${endColour}"
   fi
 }
 
-function cp_sxhkdrc(){
+function cp_sxhkdrc_arch(){
   userName="$(logname)"
   echo -e "${cyanColour}[*]${endColour} ${grayColour}Copiando archvio${endColour} ${cyanColour}~/.config/bspwm/bspwmrc${endColour} ${grayColour}...${endColour}"
   cp /usr/share/doc/bspwm/examples/sxhkdrc /home/$userName/.config/sxhkd/
@@ -169,9 +175,24 @@ function cp_sxhkdrc(){
   fi
 }
 
-function config_sxhkdrc(){
+function sxhkdrc_configuration_arch(){
   userName="$(logname)"
-  echo -e "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD !${endColour}"
-  sed -i 's/urxvt/zsh/' /home/$userName/.config/sxhkd/sxhkdrc
-  echo -e "\t${greenColour}[*]${endColour} ${grayColour}Listo !${endColour}"
+  echo -en "${cyanColour}[*]${endColour}${grayColour}Asignando consola BASH en configuración SXHKD ...${endColour}"
+  sed -i 's/urxvt/gnome-terminal/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/h,j,k,l/Left,Down,Up,Right/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + ctrl + {Left,Down,Up,Right}/super + ctrl + alt + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + ctrl + space/super + ctrl + alt + space/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + alt + {Left,Down,Up,Right}/#super + alt + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}/#bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + alt + shift + {Left,Down,Up,Right}/#super + alt + shift + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}/#bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}/' /home/$userName/.config/sxhkd/sxhkdrc
+  sed -i 's/super + {Left,Down,Up,Right}/super + ctrl + {Left,Down,Up,Right}/' /home/$userName/.config/sxhkd/sxhkdrc
+  echo -e "\n#CUSTOM" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  echo -e "\nalt + super + {Left,Down,Up,Right}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  echo -e "\t/home/$userName/.config/bspwm/scripts/bspwm_resize {west,south,north,east}" | tee -a /home/$userName/.config/sxhkd/sxhkdrc > /dev/null
+  mkdir /home/$userName/.config/bspwm/scripts
+  cp ./scripts/bspwm_resize /home/$userName/.config/bspwm/scripts/
+  chmod +x /home/$userName/.config/bspwm/scripts/bspwm_resize
+  chown $userName:$userName /home/$userName/.config/bspwm/scripts/bspwm_resize
+  echo -e "${greenColour}(OK)${endColour}"
 }

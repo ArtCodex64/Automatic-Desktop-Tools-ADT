@@ -91,7 +91,7 @@ function bspwm_installation_arch(){
 tput civis
 userName="$(logname)"
 echo -e "${cyanColour}[*]${endColour} ${grayColour}Verificando${endColour} ${cyanColour}bspwm${endColour} ${grayColour}...${endColour}"
-dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm net-tools)
+dependencies=(xorg libxcb xcb-util xcb-util-wm xcb-util-keysyms bspwm sxhkd lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings rxvt-unicode xorg-xinit xterm net-tools dpkg gnome-terminal)
 #mkdir ~/.config
 #mkdir ~/.config/bspwm
 #mkdir ~/.config/sxhkd
@@ -158,15 +158,15 @@ for program in "${dependencies[@]}";do
   fi
 done
 
-mkdir_bspwm
-install_bspwmrc_sxhkdrc
-chmod_bspwmrc
-lightdm_enable
+mkdir_bspwm_arch
+install_bspwmrc_sxhkdrc_arch
+chmod_bspwmrc_arch
+lightdm_enable_arch
 
 tput cnorm
 }
 
-function mkdir_bspwm(){
+function mkdir_bspwm_arch(){
   userName="$(logname)"
   echo -e "${cyanColour}[*]${endColour} ${grayColour}Creando directorios${endColour} ${cyanColour}~/.config/bspwm ~/.config/sxhkd${endColour} ${grayColour}...${endColour}"
   mkdir /home/$userName/.config > /dev/null 2>/dev/null
@@ -179,7 +179,7 @@ function mkdir_bspwm(){
   fi
 }
 
-function install_bspwmrc_sxhkdrc(){
+function install_bspwmrc_sxhkdrc_arch(){
   userName="$(logname)"
   echo -e "${cyanColour}[*]${endColour} ${grayColour}Copiando archvios${endColour} ${cyanColour}~/.config/bspwm/bspwmrc${endColour} ${grayColour}y${endColour} ${cyanColour}~/.config/sxhkd/sxhkdrc${endColour}${grayColour}...${endColour}"
   install -Dm755 /usr/share/doc/bspwm/examples/bspwmrc /home/$userName/.config/bspwm/bspwmrc
@@ -189,13 +189,13 @@ function install_bspwmrc_sxhkdrc(){
   fi
 }
 
-function chmod_bspwmrc(){
+function chmod_bspwmrc_arch(){
   userName="$(logname)"
   chmod u+o /home/$userName/.config/bspwm/bspwmrc
   echo -e "\t${grayColour}Permisos asignados a ${cyanColour}bspwmrc${endColour} !${endColour}"
 }
 
-function lightdm_enable(){
+function lightdm_enable_arch(){
   systemctl enable lightdm.service > /dev/null 2>&1
   echo -e "\t${grayColour}Enable ${cyanColour}lightdm${endColour} !${endColour}"
 }

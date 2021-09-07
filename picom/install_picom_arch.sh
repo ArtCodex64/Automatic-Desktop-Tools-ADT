@@ -113,6 +113,7 @@ function config_picom_arch(){
   mkdir /home/$userName/.config/picom
   if [[ -d /home/$userName/.config/picom ]];then
     cp /home/$userName/.config/AUTOMATICOESC/blue-sky/picom.conf /home/$userName/.config/picom/
+    chown $userName:$userName /home/$userName/.config/picom/picom.conf
     sed -i 's/backend = "glx"/#backend = "glx"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/#backend = "xrender"/backend = "xrender"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     sed -i 's/blur-method = "dual_kawase"/#blur-method = "dual_kawase"/' /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
@@ -135,7 +136,7 @@ function config_picom_arch(){
           sed -i "s/$line/#$line/" /home/$userName/.config/picom/picom.conf > /dev/null 2>/dev/null
     done
     chown $userName:$userName /home/$userName/.config/AUTOMATICOESC/picom/picom.conf > /dev/null 2>/dev/null
-    echo -e "p\npicom --experimental-backend &" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
+    echo -e "\npicom --experimental-backend &" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
     #echo -e "\nbspc config border_width 0" | tee -a /home/$userName/.config/bspwm/bspwmrc > /dev/null 2>/dev/null
   else
     echo -e "${redColour}(no installed)${endColour}"
