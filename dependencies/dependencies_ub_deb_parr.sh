@@ -59,7 +59,7 @@ userName="$(logname)"
 dependenciesShare=( "build-essential" "python3")
 dependenciesBin=( "git" "vim" "xcb" "make" ) #He borrado la herramienta CC
 dependenciesDoc=( "libxcb-util0-dev" "libxcb-randr0-dev" "libxcb-icccm4-dev" "libxcb-keysyms1-dev" "libxcb-xinerama0-dev" "libasound2-dev" "libxcb-xtest0-dev" "libxcb-shape0-dev" "libxcb-ewmh-dev" )
-dependenciesPolybarBin=( "cmake" "pkg-config")
+dependenciesPolybarBin=( "cmake" "pkg-config" "polybar")
 dependenciesPolybarShare=( "cmake-data" "python3-sphinx" "libcairo2-dev" "libxcb1-dev" "libxcb-composite0-dev" "python3-xcbgen" "xcb-proto" "libxcb-image0-dev" "libxcb-xkb-dev" "libxcb-xrm-dev" "libxcb-cursor-dev" "libpulse-dev" "libjsoncpp-dev" "libmpdclient-dev" "libcurl4-openssl-dev" "libnl-genl-3-dev" )
 
 echo -e "${cyanColour}[*]${endColour} ${grayColour}Comprobando dependencias necesarias para BSPWM y SXHKD ...${endColour}"
