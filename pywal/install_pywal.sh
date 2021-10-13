@@ -38,16 +38,16 @@ function config_pywal(){
   userName="$(logname)"
   if [[ $operating_system == "ubuntu" ]];then
     echo -e "\n#PYWAL" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
-    echo -e "wal -i /home/$userName/BGIMAGES/fondo-ubuntu.jpg &" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
+    echo -e "#wal -i /home/$userName/BGIMAGES/fondo-ubuntu.jpg & > /dev/null 2>/dev/null" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
   elif [[ $operating_system == "debian" ]];then
     echo -e "\n#PYWAL" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
-    echo -e "wal -i /home/$userName/BGIMAGES/fondo-debian.jpg &" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
+    echo -e "#wal -i /home/$userName/BGIMAGES/fondo-debian.jpg & > /dev/null 2>/dev/null" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
   elif [[ $operating_system == "parrot" ]];then
     echo -e "\n#PYWAL" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
-    echo -e "wal -i /home/$userName/BGIMAGES/fondo-parrot.jpg &" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
+    echo -e "#wal -i /home/$userName/BGIMAGES/fondo-parrot.jpg & > /dev/null 2>/dev/null" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
   elif [[ $operating_system == "arch" ]];then
     echo -e "\n#PYWAL" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
-    echo -e "wal -i /home/$userName/BGIMAGES/fondo-arch-linux.jpg &" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
+    echo -e "#wal -i /home/$userName/BGIMAGES/fondo-arch-linux.jpg & > /dev/null 2>/dev/null" | tee -a /home/$userName/.zshrc > /dev/null 2>/dev/null
   fi
   mkdir /home/$userName/.config/wal
   chown -R $userName:$userName /home/$userName/.config/wal
